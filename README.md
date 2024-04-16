@@ -34,5 +34,5 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
 # Contributors
 + [Liu Gan](https://github.com/GanLiuuuu)
 + [Kary](https://github.com/Karyl01))
-+ [](https://github.com/Jouwy)
++ [viayuu](https://github.com/viayuu)
   
