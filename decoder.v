@@ -22,15 +22,16 @@
 
 module decoder(
 input[31:0] instruction,
-output reg[4:0] ReadReg1,
-output reg[4:0] ReadReg2,
-output reg[4:0] WriteReg,
-output reg[31:0] imm,
-output reg RegWrite,
+input[31:0] register[0:31],
 output reg[31:0] ReadData1,
 output reg[31:0] ReadData2
     );
     reg[6:0] opcode;
+     reg[4:0] ReadReg1;
+     reg[4:0] ReadReg2;
+     reg[4:0] WriteReg;
+     reg[31:0] imm;
+     reg RegWrite;
 always@(*) begin
 opcode = instruction[6:0];
 case(opcode)
@@ -106,7 +107,29 @@ begin
     RegWrite = 1'b1;
      WriteReg[4:0] = instruction[11:7];
 end
+7'b0010111:
+begin
+    //auipc
+    ReadReg1[4:0] = 5'b0;
+    ReadReg2[4:0] = 5'b0;
+    imm = {instruction[31:12],11'b0};
+    RegWrite = 1'b1;
+     WriteReg[4:0] = instruction[11:7];
+end
+7'b1110011:
+begin
+    //ecall, ebreak
+     ReadReg1[4:0] = instruction[19:15];
+    ReadReg2[4:0] = 5'b0;
+    imm[31:0] = {{20{instruction[31]}},instruction[31:20]};
+    RegWrite = 1'b1;
+     WriteReg[4:0] = instruction[11:7];   
+end
 endcase
 end
     
+always@(*)begin
+    ReadData1 = register[ReadReg1];
+    ReadData2 = register[ReadReg2];
+end
 endmodule
