@@ -2,6 +2,11 @@
 
 This is a project implemented in Verilog based on Xilinx Artix-7 FPGA development board, EGO1 (XC7A35T-1CSG324C).
 
+**Modules**：
+
+|  Name   | version |       output         |           description           |
+| decoder.v | V1.0| ReadData1, ReadData2, imm | decode instruction |
+
 [*[Read the detailed project specifications]*]()
 
 [*[Read the detailed project report]*]()
@@ -24,10 +29,8 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
   </div>
 </div>
 
-# Project Structure
-Processor
-|
-|--decoder.v(decode instruction. output: ReadData1, ReadData2, imm)
+
+
 
 # Functionalities
 +
@@ -38,6 +41,6 @@ Processor
 
 # Contributors
 + [Liu Gan](https://github.com/GanLiuuuu)
-+ [Kary](https://github.com/Karyl01))
++ [Kary](https://github.com/Karyl01)
 + [viayuu](https://github.com/viayuu)
   
