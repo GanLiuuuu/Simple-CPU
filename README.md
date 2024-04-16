@@ -12,7 +12,7 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
 
 <div style="display: flex; justify-content: space-between;">
   <div>
-    <img src="" width = "800">
+    <img src="/imgs/FPGA.png" width = "800">
   </div>
 </div>
 
