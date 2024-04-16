@@ -24,6 +24,11 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
   </div>
 </div>
 
+# Project Structure
+Processor
+|
+|--decoder.v(decode instruction. output: ReadData1, ReadData2, imm)
+
 # Functionalities
 +
 +
