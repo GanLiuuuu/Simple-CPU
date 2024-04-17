@@ -162,6 +162,7 @@ end
     
 always@(posedge clk) begin
     if(!rst)begin
+            //reset
             register[0]<=32'b0;
             register[1]<=32'b0;
             register[2]<=32'b0;
