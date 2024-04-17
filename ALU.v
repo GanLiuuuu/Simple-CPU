@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module decoder(
+module ALU(
     input ALUsrc,
     input[2:0] ALUop,
     input[31:0] ReadData1,
