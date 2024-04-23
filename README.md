@@ -4,12 +4,13 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
 
 **Modules**：
 
-|  Name   | version |       output         |           description           |
-| :-----: | :--: | :------------------: | :----------------------------------: |
-| decoder.v | V1.0| ReadData1, ReadData2, imm | decode instruction |
-|ALU.v|V1.0|zero, out|executor|
-|MUX|V1.0|out|mux in ALU|
-|...|...|...|...|
+|  Name   | version |           description           |
+| :-----: | :--: | :----------------------------------: |
+| decoder.v | V1.0 | decode instruction |
+|ALU.v|V1.0|executor|
+|MUX|V1.0|mux in ALU|
+|control.v| V1.0 | simple control unit, only compatible with a few specific instructions|
+|...|...|...|
 
 [*[Read the detailed project specifications]*]()
 
