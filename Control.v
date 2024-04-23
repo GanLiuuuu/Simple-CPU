@@ -6,7 +6,7 @@ module control(
     output MemRead,
     output MemWrite,
     output MemtoReg,
-    otuput RegWrite
+    output RegWrite
 );
 always @(*) begin
 opcode = instruction[6:0];
