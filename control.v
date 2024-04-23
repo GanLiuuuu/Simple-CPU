@@ -1,13 +1,14 @@
 module control(
-    input[31:0] opcode,
-    output Branch,
-    output[1:0] ALUOp,
-    output ALUSrc,
-    output MemRead,
-    output MemWrite,
-    output MemtoReg,
-    output RegWrite
+    input[31:0] instruction,
+    output reg  Branch,
+    output reg[1:0] ALUOp,
+    output reg ALUSrc,
+    output reg MemRead,
+    output reg MemWrite,
+    output reg MemtoReg,
+    output reg RegWrite
 );
+reg[6:0] opcode;
 always @(*) begin
 opcode = instruction[6:0];
 case(opcode)
@@ -60,13 +61,24 @@ case(opcode)
     7'b1100011:
     begin
         //B-type
-        MemtoReg = 1'b0;
-        Branch = 1'b0;
-        ALUOp = 2'b00;
-        ALUSrc = 1'b0;
-        MemRead = 1'b0;
-        MemWrite = 1'b1;
-        RegWrite = 1'b0;
+        if(instruction[14:12]==3'b0)begin
+                MemtoReg = 1'b0;
+                Branch = 1'b1;
+                ALUOp = 2'b01;
+                ALUSrc = 1'b0;
+                MemRead = 1'b0;
+                MemWrite = 1'b0;
+                RegWrite = 1'b0;
+        end
+        else begin
+            MemtoReg = 1'b0;
+            Branch = 1'b0;
+            ALUOp = 2'b01;
+            ALUSrc = 1'b0;
+            MemRead = 1'b0;
+            MemWrite = 1'b0;
+            RegWrite = 1'b0;
+        end
     end
     7'b1101111:
     begin
