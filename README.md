@@ -37,7 +37,11 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
 
 # Project Structure
 Here is what current structure look like:
-![structure](imgs/structure.png)
+<div style="display: flex; justify-content: space-between;">
+  <div>
+    <img src="/imgs/Structure.png" width = "400">
+  </div>
+</div>
 #### Top
 <details><table>
     <tr>
