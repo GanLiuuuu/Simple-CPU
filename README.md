@@ -36,6 +36,8 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
 
 
 # Project Structure
+Here is what current structure look like:
+![structure](imgs/structure.png)
 #### Top
 <details><table>
     <tr>
@@ -81,6 +83,57 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
         <td>Segment tube control</td>
     </tr>
 </table></details>
+
+### control
+```
+module control(
+    input[31:0] instruction,
+    output reg  Branch,
+    output reg[1:0] ALUOp,
+    output reg ALUSrc,
+    output reg MemRead,
+    output reg MemWrite,
+    output reg MemtoReg,
+    output reg RegWrite
+);
+```
+### decoder
+<div style="display: flex; justify-content: space-between;">
+  <div>
+    <img src="/imgs/decoder.png" width = "800">
+  </div>
+</div>
+
+```
+module decoder(
+  input clk,
+  input rst,
+  input[31:0] instruction,
+  input[31:0] WriteData,
+  output reg[31:0] imm,
+  output reg [31:0] ReadData1,
+  output reg [31:0] ReadData2
+);
+```
+### ALU
+<div style="display: flex; justify-content: space-between;">
+  <div>
+    <img src="/imgs/ALU.png" width = "400">
+  </div>
+</div>
+
+```
+module ALU(
+    input ALUsrc,
+    input[1:0] ALUOp,
+    input[31:0] instruction,
+    input[31:0] ReadData1,
+    input[31:0] ReadData2,
+    output reg[31:0] imm,
+    output reg  zero,
+    output reg [31:0] out
+);
+```
 
 # Functionalities
 ### Basic Functionalities
