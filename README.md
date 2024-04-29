@@ -100,7 +100,7 @@ module control(
 ### decoder
 <div style="display: flex; justify-content: space-between;">
   <div>
-    <img src="/imgs/decoder.png" width = "800">
+    <img src="/imgs/decoder.png" width = "400">
   </div>
 </div>
 
