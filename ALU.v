@@ -2,7 +2,8 @@
 
 module ALU(
     input ALUsrc,
-    input[3:0] ALUControl,
+    input[1:0] ALUOp,
+    input[31:0] instruction,
     input[31:0] ReadData1,
     input[31:0] ReadData2,
     output reg[31:0] imm,
@@ -13,6 +14,8 @@ module ALU(
 // 内部信号声明
 reg[31:0] A = ReadData1;
 reg[31:0] B;
+wire[3:0] ALUControl;
+ALUControl a(instruction,ALUOp,ALUControl);
 MUX mux(ALUsrc,ReadData2,imm,B);
 wire [31:0] AddResult;
 wire [31:0] SubResult;
@@ -26,7 +29,7 @@ assign OrRes = A | B;
 
 always @*
 begin
-    case (ALUop)
+    case (ALUControl)
         4'b0010: out = AddResult; // 加法
         4'b0110: out = SubResult; // 减法
         4'b0000: out = AndRes;
