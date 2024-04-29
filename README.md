@@ -56,16 +56,14 @@ This is a project implemented in Verilog based on Xilinx Artix-7 FPGA developmen
         <td>Hardware</td>
         <td>Signal of reset button</td>
     </tr>
-  
     <tr>
         <td>sw</td>
         <td>I</td>
         <td>Hardware</td>
         <td>Signal of buttons</td>
     </tr>
-
     <tr>
-        <td>led_o</td>
+        <td>led</td>
         <td>O</td>
         <td>Hardware</td>
         <td>LED control</td>
