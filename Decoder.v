@@ -1,83 +1,61 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 2024/04/16 13:13:45
-// Design Name: 
-// Module Name: decoder
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+`include "variables.v"
 
-
-module decoder(
+module Decoder(
 input clk,
 input rst,
 input[31:0] instruction,
 input[31:0] WriteData,
+input Write,
 output reg[31:0] imm,
 output reg [31:0] ReadData1,
 output reg [31:0] ReadData2
     );
     reg[31:0] register[0:31];
     reg[6:0] opcode;
-     reg[4:0] ReadReg1;
-     reg[4:0] ReadReg2;
-     reg[4:0] WriteReg;
-     reg RegWrite;
+    reg[4:0] ReadReg1;
+    reg[4:0] ReadReg2;
+    reg[4:0] WriteReg;
+    reg RegWrite;
 
      
 always@(*) begin
 opcode = instruction[6:0];
+RegWrite = 1'b0;
 case(opcode)
-    7'b0110011:
+    `RTYPE:
     begin
         //R-type
         ReadReg1[4:0] = instruction[19:15];
         ReadReg2[4:0] = instruction[24:20];
         imm = 32'b0;
-        
-        RegWrite = 1'b1;
         WriteReg[4:0] = instruction[11:7];
         if(WriteReg==5'b0)begin
             RegWrite = 1'b1;
         end
     end
-    7'b0010011:
+    `IARITH:
     begin
         //I-type arithmatic
         ReadReg1[4:0] = instruction[19:15];
         ReadReg2[4:0] = 5'b0;
         imm[31:0] = {{20{instruction[31]}},instruction[31:20]};
-        RegWrite = 1'b1;
-         WriteReg[4:0] = instruction[11:7];
-         if(WriteReg==5'b0)begin
-                 RegWrite = 1'b1;
-          end
+        WriteReg[4:0] = instruction[11:7];
+        if(WriteReg==5'b0)begin
+                RegWrite = 1'b1;
+        end
     end
-    7'b0000011:
+    `ILOAD:
     begin
         //I-type load
         ReadReg1[4:0] = instruction[19:15];
         ReadReg2[4:0] = 5'b0;
         imm[31:0] = {{20{instruction[31]}},instruction[31:20]};
-        RegWrite = 1'b1;
          WriteReg[4:0] = instruction[11:7];
          if(WriteReg==5'b0)begin
              RegWrite = 1'b1;
          end
     end
-    7'b0100011:
+    `STYPE:
     begin
         //S-type
         ReadReg1[4:0] = instruction[19:15];
@@ -86,70 +64,63 @@ case(opcode)
         RegWrite = 1'b0;
         WriteReg = 5'b0;
     end
-    7'b1100011:
+    `BTYPE:
     begin
         //B-type
         ReadReg1[4:0] = instruction[19:15];
         ReadReg2[4:0] = instruction[24:20];
         imm = {{19{instruction[31]}},instruction[31],instruction[7],instruction[30:25],instruction[11:8],1'b0};
-        RegWrite = 1'b0;
          WriteReg[4:0] = 5'b0;
     end
-    7'b1101111:
+    `JAL:
     begin
         //jal
         ReadReg1[4:0] = 5'b0;
         ReadReg2[4:0] = 5'b0;
         imm = {{11{instruction[31]}},instruction[31], instruction[19:12], instruction[20],instruction[30:21],1'b0};
-        RegWrite = 1'b1;
-         WriteReg[4:0] = instruction[11:7];
-         if(WriteReg==5'b0)begin
-             RegWrite = 1'b1;
-         end
+        WriteReg[4:0] = instruction[11:7];
+        if(WriteReg==5'b0)begin
+            RegWrite = 1'b1;
+        end
     end
-    7'b1100111:
+    `JALR:
     begin
         //jalr
         ReadReg1[4:0] = instruction[19:15];
         ReadReg2[4:0] = 5'b0;
-        imm[31:0] = {{20{instruction[31]}},instruction[31:20]};
-        RegWrite = 1'b1;
-         WriteReg[4:0] = instruction[11:7];
-         if(WriteReg==5'b0)begin
-             RegWrite = 1'b1;
-         end
+        imm[31:0] = {20'b0,instruction[31:20]};
+        WriteReg[4:0] = instruction[11:7];
+        if(WriteReg==5'b0)begin
+            RegWrite = 1'b1;
+        end
     end
-    7'b0110111:
+    `LUI:
     begin
         //lui
         ReadReg1[4:0] = 5'b0;
         ReadReg2[4:0] = 5'b0;
         imm = {instruction[31:12],11'b0};
-        RegWrite = 1'b1;
          WriteReg[4:0] = instruction[11:7];
          if(WriteReg==5'b0)begin
              RegWrite = 1'b1;
          end
     end
-    7'b0010111:
+    `AUIPC:
     begin
         //auipc
         ReadReg1[4:0] = 5'b0;
         ReadReg2[4:0] = 5'b0;
         imm = {instruction[31:12],11'b0};
-        RegWrite = 1'b1;
          WriteReg[4:0] = instruction[11:7];
          if(WriteReg==5'b0)begin
              RegWrite = 1'b1;
          end
     end
-    7'b1110011:
+    `ECALL:
     begin
-        //ecall, ebreak
-         ReadReg1[4:0] = instruction[19:15];
+        ReadReg1[4:0] = 5'b0;
         ReadReg2[4:0] = 5'b0;
-        imm[31:0] = {{20{instruction[31]}},instruction[31:20]};
-        RegWrite = 1'b1;
+        imm[31:0] = 32'b0;
          WriteReg[4:0] = instruction[11:7]; 
          if(WriteReg==5'b0)begin
              RegWrite = 1'b1;
@@ -197,7 +168,7 @@ always@(posedge clk) begin
             register[31]<=32'b0;
     end
     else begin
-        if(RegWrite) register[WriteReg]<=WriteData;
+        if(Write==1'b1 && RegWrite==1'b0) register[WriteReg]<=WriteData;
     end
 end
 
