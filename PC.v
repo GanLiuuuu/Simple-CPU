@@ -2,13 +2,14 @@
 
 module PC(
 
-    input[31:0]  Addr_result,            // À´×ÔALU,ÎªALU¼ÆËã³öµÄÌø×ªµØÖ·(beq)
-    input        clock,           //Ê±ÖÓ
-    input        reset,           //¸´Î»ĞÅºÅ¸ßµçÆ½ÓĞĞ§
-    input        Branch,               // À´×Ôcontroller£¨ÅĞ¶ÏÊÇ·ñÊÇbeq£©
-    input        Zero,                  //À´×ÔALU£¨ÅĞ¶ÏÊÇ·ñÏàµÈ£©
+    input[31:0]  Addr_result,            // æ¥è‡ªALU,ä¸ºALUè®¡ç®—å‡ºçš„è·³è½¬åœ°å€(beq)
+    input        clock,           //æ—¶é’Ÿ
+    input        reset,           //å¤ä½ä¿¡å·é«˜ç”µå¹³æœ‰æ•ˆ
+    input        Branch,               // æ¥è‡ªcontrollerï¼ˆåˆ¤æ–­æ˜¯å¦æ˜¯beqï¼‰
+    input        nBranch,               // controller(bne)
+    input        Zero,                  //æ¥è‡ªALUï¼ˆåˆ¤æ–­æ˜¯å¦ç›¸ç­‰ï¼‰
      
-    output[31:0] branch_base_addr,   // ÓĞÌõ¼şÌø×ªÖ¸Áî£¬¸ÃÖµÎªPC£¬ËÍÍùALU
+    output[31:0] branch_base_addr,   // æœ‰æ¡ä»¶è·³è½¬æŒ‡ä»¤ï¼Œè¯¥å€¼ä¸ºPCï¼Œé€å¾€ALU
     output [31:0] PC_plus_4,        // PC + 4;
     output reg [31:0] PC = 32'b0
     );
@@ -16,7 +17,7 @@ module PC(
     assign PC_plus_4 = PC + 4;
     assign branch_base_addr = PC;
     always @* begin
-        if((Branch == 1) && (Zero == 1 ))   //beqÖ¸ÁîÇÒÌø×ª
+        if(((Branch == 1) && (Zero == 1 )) || ((nBranch == 1) && (Zero == 0)))  //beqã€bneæŒ‡ä»¤ä¸”è·³è½¬
             Next_PC = Addr_result;
         else 
             Next_PC = PC_plus_4; // PC+4
