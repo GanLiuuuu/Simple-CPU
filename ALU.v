@@ -36,7 +36,7 @@ wire shift_dir,//1 for right
 wire shift_type // if it is 1, then is logical shift
 
 assign operand1 = (ALUSrc1 == `REG) ? ReadData1 : (ALUSrc1 == `ZERO) ? 32'd0 : PCin;
-assign operand2 = (ALUSrc == `IMM) ? imm32 : (ALUSrc == `REG) ? ReadData2 : 32'd4;
+assign operand2 = (ALUSrc == `IMM && ALUOp==`I && ({funct7,funct3}==`SLLfunc||{funct7,funct3}==`SRAfunc||{funct7,funct3}==`SRLfunc)) ? imm32[4:0] :(ALUSrc==`IMM) ? imm32 : (ALUSrc == `REG) ? ReadData2 : 32'd4;
 assign operand3 = (PCSrc==`PPC) ? PCin : ReadData1;
 assign operand4 = imm32;
 assign shift_dir = (funct3==3'b101) ? `SHIRFTRIGHT : 1'b0;
