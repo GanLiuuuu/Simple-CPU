@@ -3,23 +3,22 @@
 module Decoder(
 input clk,
 input rst,
-input[31:0] instruction,
-input[31:0] WriteData,
+input[`REGWIDTH-1:0] instruction,
+input[`REGWIDTH-1:0] WriteData,
 input Write,
-output reg[31:0] imm,
-output reg [31:0] ReadData1,
-output reg [31:0] ReadData2
-    );
-    reg[31:0] register[0:31];
-    reg[6:0] opcode;
-    reg[4:0] ReadReg1;
-    reg[4:0] ReadReg2;
-    reg[4:0] WriteReg;
-    reg RegWrite;
+output reg[`REGWIDTH-1:0] imm,
+output reg [`REGWIDTH-1:0] ReadData1,
+output reg [`REGWIDTH-1:0] ReadData2
+);
+reg[`REGWIDTH-1:0] register[0:`REGWIDTH-1];
+reg[`OPWIDTH-1:0] opcode;
+reg[4:0] ReadReg1;
+reg[4:0] ReadReg2;
+reg[4:0] WriteReg;
+reg RegWrite;
 
-     
 always@(*) begin
-opcode = instruction[6:0];
+opcode = instruction[`REGWIDTH-1:0];
 RegWrite = 1'b0;
 case(opcode)
     `RTYPE:
