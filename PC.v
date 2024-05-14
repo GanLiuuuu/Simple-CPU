@@ -6,7 +6,6 @@ module PC(
     input        clock,           //时钟
     input        reset,           //复位信号高电平有效
     input        Branch,               // 来自controller（判断是否是beq）
-    input        nBranch,               // controller(bne)
     input        Zero,                  //来自ALU（判断是否相等）
      
     output[31:0] branch_base_addr,   // 有条件跳转指令，该值为PC，送往ALU
@@ -17,7 +16,7 @@ module PC(
     assign PC_plus_4 = PC + 4;
     assign branch_base_addr = PC;
     always @* begin
-        if(((Branch == 1) && (Zero == 1 )) || ((nBranch == 1) && (Zero == 0)))  //beq、bne指令且跳转
+        if(((Branch == 1) && (Zero == 1 )))  //跳转
             Next_PC = Addr_result;
         else 
             Next_PC = PC_plus_4; // PC+4
