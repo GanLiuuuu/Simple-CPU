@@ -1,5 +1,5 @@
 
-`include "variables.v"
+`include "variables.vh"
 module TOP(
     input clk,
     input PC,
