@@ -3,10 +3,8 @@
 module TOP(
     input clk,
     input PC,
-    input rst,
-    input
-)
-wire[`REGWIDTH-1:0] inst 
+    input rst);
+wire[`REGWIDTH-1:0] inst; 
 wire rst_filtered;
 wire Branch;
 wire[`ALUOPWIDTH-1:0] ALUOp;
