@@ -1,10 +1,10 @@
 `include "variables.v"
 //����PC�Ĵ����ĵ�ַ����ROM�ж�ȡ���ҵĵ�ַ�����32bit��ָ��
 
-module IF (
+module IFetch (
     input wire clk,             // ʱ���ź�
     input wire rst,             // ��λ�ź�
-    input wire [14:0] PC,       // ���������
+    input wire [`REGWIDTH-1:0] PC,       // ���������
     output reg [`REGWIDTH-1:0] instruction // ���ָ��
 );
 
