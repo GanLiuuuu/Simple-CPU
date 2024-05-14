@@ -1,4 +1,4 @@
-`include "variables.v"
+`include "variables.vh"
 
 module Decoder(
 input clk,
