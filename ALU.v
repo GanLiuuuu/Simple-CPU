@@ -1,5 +1,5 @@
-`include "variables.v"
-`include "ALUvariables.v"
+`include "variables.vh"
+`include "ALUvariables.vh"
 
 module ALU(
     input[`REGWIDTH-1:0] PCin,
