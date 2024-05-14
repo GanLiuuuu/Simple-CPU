@@ -1,4 +1,4 @@
-`include "variables.v"
+`include "variables.vh"
 
 module Controller(
     input[`REGWIDTH-1:0] inst,
