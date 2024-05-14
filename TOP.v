@@ -3,7 +3,9 @@
 module TOP(
     input clk,
     input PC,
-    input rst);
+    input rst,
+    output[`REGWIDTH-1:0] out
+    );
 wire[`REGWIDTH-1:0] inst; 
 wire rst_filtered;
 wire Branch;
@@ -38,4 +40,6 @@ Controller controller(.inst(inst),.Branch(Branch), .ALUOp(ALUOp), .ALUSrc(ALUSrc
 Decoder decoder(.clk(clk), .rst(rst), .instruction(instruction), .WriteData(WriteData), .Write(Write), .imm(imm), .ReadData1(ReadData1), .ReadData2(ReadData2));
 ALU alu(.PCin(cur_PC), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .ALUOp(ALUOp), .funct3(inst[14:12]), .funct7(inst[31:25]), .ReadData1(ReadData1), .ReadData2(ReadData2), .imm32(imm), .zero(zero), .ALUResult(ALUResult), .PCout(PCout));
 Data_Mamory dma(.clk(clk), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData));
+assign out=ALUResult;
 endmodule
+
