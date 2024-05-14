@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module ALUtb();
 reg[31:0] instruction;
 reg[31:0] PC;
