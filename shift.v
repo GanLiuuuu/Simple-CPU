@@ -1,5 +1,5 @@
-`include "variables.v"
-`include "ALUvariables.v"
+`include "variables.vh"
+`include "ALUvariables.vh"
 module shift(
     input shift_dir,
     input shift_type,
