@@ -1,14 +1,14 @@
-`timescale 1ns / 1ps
-//ÊäÈëPC¼Ä´æÆ÷µÄµØÖ·£¬´ÓROMÖÐ¶ÁÈ¡µ½ÎÒµÄµØÖ·µÄÊä³ö32bitµÄÖ¸Áî
+`include "variables.v"
+//ï¿½ï¿½ï¿½ï¿½PCï¿½Ä´ï¿½ï¿½ï¿½ï¿½Äµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ROMï¿½Ð¶ï¿½È¡ï¿½ï¿½ï¿½ÒµÄµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½32bitï¿½ï¿½Ö¸ï¿½ï¿½
 
 module IF (
-    input wire clk,             // Ê±ÖÓÐÅºÅ
-    input wire rst,             // ¸´Î»ÐÅºÅ
-    input wire [14:0] PC,       // ³ÌÐò¼ÆÊýÆ÷
-    output reg [31:0] instruction // Êä³öÖ¸Áî
+    input wire clk,             // Ê±ï¿½ï¿½ï¿½Åºï¿½
+    input wire rst,             // ï¿½ï¿½Î»ï¿½Åºï¿½
+    input wire [14:0] PC,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    output reg [`REGWIDTH-1:0] instruction // ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 );
 
-wire [31:0] rom_data;  // ÓÃÓÚ´Ó ROM Ä£¿é»ñÈ¡µÄÖ¸Áî
+wire [31:0] rom_data;  // ï¿½ï¿½ï¿½Ú´ï¿½ ROM Ä£ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ö¸ï¿½ï¿½
 
 instructionROM inst_rom (
     .clka(clk),
@@ -18,9 +18,9 @@ instructionROM inst_rom (
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
-        instruction <= 32'b0;   // ¸´Î»Ê±½«Ö¸ÁîÖÃÁã
+        instruction <= 32'b0;   // ï¿½ï¿½Î»Ê±ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     end else begin
-        instruction <= rom_data; // ´Ó ROM Ä£¿é»ñÈ¡Ö¸Áî
+        instruction <= rom_data; // ï¿½ï¿½ ROM Ä£ï¿½ï¿½ï¿½È¡Ö¸ï¿½ï¿½
     end
 end
 
