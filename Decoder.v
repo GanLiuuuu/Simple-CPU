@@ -167,7 +167,7 @@ always@(posedge clk) begin
             register[31]<=32'b0;
     end
     else begin
-        if(Write==1'b1 && RegWrite==1'b0) register[WriteReg]<=WriteData;
+        if(Write==1'b1 && RegWrite==1'b1) register[WriteReg]<=WriteData;
     end
 end
 
