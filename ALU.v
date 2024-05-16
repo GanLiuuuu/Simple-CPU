@@ -3,8 +3,8 @@
 
 module ALU(
     input[`REGWIDTH-1:0] PCin,
-    input ALUSrc,
-    input ALUSrc1,
+    input[1:0] ALUSrc,
+    input[1:0] ALUSrc1,
     input PCSrc,
     input[`ALUOPWIDTH-1:0] ALUOp,
     input[2:0] funct3,
@@ -15,6 +15,7 @@ module ALU(
     output zero,
     output[`REGWIDTH-1:0] ALUResult,
     output[`REGWIDTH-1:0] PCout
+    
 );
 // 内部信号声明
 wire[`REGWIDTH-1:0] AddResult;
@@ -23,20 +24,21 @@ wire[`REGWIDTH-1:0] AndRes;
 wire[`REGWIDTH-1:0] OrRes;
 wire[`REGWIDTH-1:0] XorRes;
 wire[`REGWIDTH-1:0] SHIRFTRes;
-
+wire[`REGWIDTH-1:0] four;
+assign four = 32'b00000000000000000000000000000100;
 wire[2:0] BranchType;
-
-
+wire[`CTRLWIDTH-1:0] control;
 wire[`REGWIDTH-1:0] operand1;
 wire[`REGWIDTH-1:0] operand2;
+
 wire[`REGWIDTH-1:0] operand3;
 wire[`REGWIDTH-1:0] operand4;
-wire[`CTRLWIDTH-1:0] control;
 wire shift_dir;//1 for right
 wire shift_type; // if it is 1, then is logical shift
 
 assign operand1 = (ALUSrc1 == `REG) ? ReadData1 : (ALUSrc1 == `ZERO) ? 32'd0 : PCin;
-assign operand2 = (ALUSrc == `IMM && ALUOp==`I && ({funct7,funct3}==`SLLfunc||{funct7,funct3}==`SRAfunc||{funct7,funct3}==`SRLfunc)) ? {27'b0,imm32[4:0]} :(ALUSrc==`IMM) ? imm32 : (ALUSrc == `REG) ? ReadData2 : 32'd4;
+assign operand2 = (ALUSrc == `FOUR) ? ReadData2 : four;
+//assign operand2 = (ALUSrc == `IMM && ALUOp==`I && ({funct7,funct3}==`SLLfunc||{funct7,funct3}==`SRAfunc||{funct7,funct3}==`SRLfunc)) ? {27'b0,imm32[4:0]} :(ALUSrc==`IMM) ? imm32 : (ALUSrc == `REG) ? ReadData2 : four;
 assign operand3 = (PCSrc==`PPC) ? PCin : ReadData1;
 assign operand4 = imm32;
 assign shift_dir = (funct3==3'b101) ? `SHIRFTRIGHT : 1'b0;
