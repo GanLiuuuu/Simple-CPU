@@ -9,7 +9,7 @@ module PC(
     input        Zero,                  //来自ALU（判断是否相等）
      
     output[31:0] branch_base_addr,   // 有条件跳转指令，该值为PC，送往ALU
-    output reg [31:0] PC = 32'b0
+    output reg [31:0] PC
     );
     reg [31:0] Next_PC = 32'b0;
     assign PC_plus_4 = PC + 4;
