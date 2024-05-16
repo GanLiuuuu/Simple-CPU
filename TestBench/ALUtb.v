@@ -21,6 +21,7 @@ wire zero;
 wire[31:0] ALUResult;
 
 
+
 Controller ctl(instruction,Branch,ALUOp,ALUSrc,ALUSrc1,PCSrc,MemRead,MemWrite,MemtoReg,RegWrite);
 ALU alu(PC,ALUSrc,ALUSrc1,PCSrc,ALUOp,instruction[14:12],instruction[31:25], ReadData1, ReadData2, imm32, zero, ALUResult,PCout);
 //不涉及对内存的处理
@@ -35,10 +36,20 @@ initial begin
     #20 rst = 1'b0;
     
     
-    
+    //lix1,1,lix2,2, li x3,3
     #20 instruction = 32'b00000000000100001000000010010011;
     #20 instruction = 32'b00000000001000010000000100010011;
     #20 instruction = 32'b00000000001000001000000110110011;
+    //lix1,10,lix2,2,sll x3,x1,x2
+    #20 instruction = 32'b00000000101000000000000010010011;
+    #20 instruction = 32'b00000000001000000000000100010011;
+    #20 instruction = 32'b00000000001000001001000110110011;
+    //jal,8 addi x3,x3,1
+    #20 instruction = 32'b00000000100000000000000111101111;
+    #20 instruction = 32'b00000000000100011000000110010011;
+    //
+    #20 instruction = 32'b00011000011010100000000110110111;
+    #20 instruction = 32'b00011000011010100000001000010111;
 end
 always begin #10 clk = ~clk; end
 endmodule
