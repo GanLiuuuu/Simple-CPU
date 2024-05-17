@@ -2,21 +2,21 @@
  .align 4
 .text
 main:
-    li t0 ,0xfffffc00   #³õÊ¼»¯t0
+    li t0 ,0xfffffc00   #åˆå§‹åŒ–t0
  
- #°´ÏÂ¿ª¹Ø£º0->1->0×ª»»£¬Í¨¹ıloop1ºÍloop2
+ #æŒ‰ä¸‹å¼€å…³ï¼š0->1->0è½¬æ¢ï¼Œé€šè¿‡loop1å’Œloop2
  loop_1: 
     lw t1, 0x74(t0)       
-    bne t1, zero, loop_1 # Èç¹û$s7²»µÈÓÚ0£¬ÔòÌø×ªµ½loop_1
+    bne t1, zero, loop_1 # å¦‚æœ$s7ä¸ç­‰äº0ï¼Œåˆ™è·³è½¬åˆ°loop_1
 loop_2:
     lw t1, 0x74(t0)       
     beq t1, zero, loop_2
     
-    #µ½ÕâÀïÒÑ¾­°´ÏÂÁËÈ·ÈÏ¼ü
-     lw t3, 0x70(t0) #ÊäÈë²âÊÔÑùÀıµ½ t3
-     xor a0, a0, a0       # a0ÇåÁã,ÓÃÓÚ¼ÆÊı
+    #åˆ°è¿™é‡Œå·²ç»æŒ‰ä¸‹äº†ç¡®è®¤é”®
+     lw t3, 0x70(t0) #è¾“å…¥æµ‹è¯•æ ·ä¾‹åˆ° t3
+     xor a0, a0, a0       # a0æ¸…é›¶,ç”¨äºè®¡æ•°
      
-    #Ìø×ªµ½¶ÔÓ¦µÄ²âÊÔÑùÀı
+    #è·³è½¬åˆ°å¯¹åº”çš„æµ‹è¯•æ ·ä¾‹
     beq t3, a0, tb0_1  
     addi a0, a0, 1     
     beq t3, a0, tb1_1  
@@ -40,9 +40,9 @@ tb0_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb1_2
     
-    #°´ÏÂÈ·ÈÏ
-    lw t4, 0x70(t0)       # ÊäÈë¼ÓÔØµ½t4
-    sw t4, 0x60(t0)       # Êä³öµ½led
+    #æŒ‰ä¸‹ç¡®è®¤
+    lw t4, 0x70(t0)       # è¾“å…¥åŠ è½½åˆ°t4
+    sw t4, 0x60(t0)       # è¾“å‡ºåˆ°led
    
 tb0_3:
     lw t1, 0x74(t0)       
@@ -51,9 +51,9 @@ tb0_4:
     lw t1, 0x74(t0)       
     beq t1, zero, tb0_4 
     
-    #°´ÏÂÈ·ÈÏ
-    lw t4, 0x70(t0)       # ÊäÈë¼ÓÔØµ½t4
-    sw t4, 0x64(t0)       # Êä³öµ½led
+    #æŒ‰ä¸‹ç¡®è®¤
+    lw t4, 0x70(t0)       # è¾“å…¥åŠ è½½åˆ°t4
+    sw t4, 0x64(t0)       # è¾“å‡ºåˆ°led
     
     j loop_1
 
@@ -64,10 +64,10 @@ tb1_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb1_2
     
-    #°´ÏÂÈ·ÈÏ
-    lb t4,0x70(t0)  #ÊäÈëaµ½ t4
-    sw t4 ,0x68(t0) #Êä³öµ½ÊıÂë¹Ü
-    addi s0,t4,0 #a´æµ½s0
+    #æŒ‰ä¸‹ç¡®è®¤
+    lb t4,0x70(t0)  #è¾“å…¥aåˆ° t4
+    sw t4 ,0x68(t0) #è¾“å‡ºåˆ°æ•°ç ç®¡
+    addi s0,t4,0 #aå­˜åˆ°s0
     
     j loop_1
     
@@ -78,10 +78,10 @@ tb2_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb2_2
     
-    #°´ÏÂÈ·ÈÏ
-    lbu t4,0x70(t0)  #ÊäÈëaµ½ t4
-    sw t4 ,0x68(t0) #Êä³öµ½ÊıÂë¹Ü
-    addi s1,t4,0 #bµÄÖµ´æµ½s1
+    #æŒ‰ä¸‹ç¡®è®¤
+    lbu t4,0x70(t0)  #è¾“å…¥aåˆ° t4
+    sw t4 ,0x68(t0) #è¾“å‡ºåˆ°æ•°ç ç®¡
+    addi s1,t4,0 #bçš„å€¼å­˜åˆ°s1
     
     j loop_1
     
@@ -92,11 +92,11 @@ tb3_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb3_2
     
-    #°´ÏÂÈ·ÈÏ
+    #æŒ‰ä¸‹ç¡®è®¤
     beq s0,s1,open
     bne s0,s1,not_open
-    open: li s10,1 #s10ÉèÖÃ³É1
-          sw s10,0x60(t0) #ledÁÁ
+    open: li s10,1 #s10è®¾ç½®æˆ1
+          sw s10,0x60(t0) #ledäº®
     not_open: 
          j loop_1
     
@@ -107,11 +107,11 @@ tb4_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb4_2
     
-    #°´ÏÂÈ·ÈÏ
+    #æŒ‰ä¸‹ç¡®è®¤
     blt s0,s1,open2
     bge s0,s1,not_open2
-    open2: li s10,1 #s10ÉèÖÃ³É1
-          sw s10,0x60(t0) #ledÁÁ
+    open2: li s10,1 #s10è®¾ç½®æˆ1
+          sw s10,0x60(t0) #ledäº®
     not_open2: 
          j loop_1    
     
@@ -122,11 +122,11 @@ tb5_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb5_2
     
-    #°´ÏÂÈ·ÈÏ
+    #æŒ‰ä¸‹ç¡®è®¤
     bge s0,s1,open3
     blt s0,s1,not_open3
-    open3: li s10,1 #s10ÉèÖÃ³É1
-          sw s10,0x60(t0) #ledÁÁ
+    open3: li s10,1 #s10è®¾ç½®æˆ1
+          sw s10,0x60(t0) #ledäº®
     not_open3: 
          j loop_1 
          
@@ -137,11 +137,11 @@ tb6_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb6_2
     
-    #°´ÏÂÈ·ÈÏ
+    #æŒ‰ä¸‹ç¡®è®¤
     bltu s0,s1,open4
     bgeu s0,s1,not_open4
-    open4: li s10,1 #s10ÉèÖÃ³É1
-          sw s10,0x60(t0) #ledÁÁ
+    open4: li s10,1 #s10è®¾ç½®æˆ1
+          sw s10,0x60(t0) #ledäº®
     not_open4: 
          j loop_1 
 
@@ -152,11 +152,11 @@ tb7_2:
     lw t1, 0x74(t0)       
     beq t1, zero, tb7_2
     
-    #°´ÏÂÈ·ÈÏ
+    #æŒ‰ä¸‹ç¡®è®¤
     bltu s0,s1,open5
     bgeu s0,s1,not_open5
-    open5: li s10,1 #s10ÉèÖÃ³É1
-          sw s10,0x60(t0) #ledÁÁ
+    open5: li s10,1 #s10è®¾ç½®æˆ1
+          sw s10,0x60(t0) #ledäº®
     not_open5: 
          j loop_1  
     
