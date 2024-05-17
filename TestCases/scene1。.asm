@@ -4,6 +4,9 @@
 main:
     li t0 ,0xfffffc00   #初始化t0
  
+ #led 在 0x60/64
+ #确认在 0x74
+ #数码管在 0x68
  #按下开关：0->1->0转换，通过loop1和loop2
  loop_1: 
     lw t1, 0x74(t0)       
