@@ -2,7 +2,7 @@ module Switch (
     input clk,
     input rst,
     input SwitchCtrl,
-    input [23:0] switch_rdata,
+    input [7:0] switch_rdata,
 
     output [15:0] switch_wdata  //  传入给memorio的data
 );
