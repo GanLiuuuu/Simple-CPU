@@ -15,7 +15,7 @@ wire[`OPWIDTH-1:0] opcode;
 wire[4:0] ReadReg1;
 wire[4:0] ReadReg2;
 wire[4:0] WriteReg;
-assign opcode = instruction[`REGWIDTH-1:0];
+assign opcode = instruction[`OPWIDTH-1:0];
 assign ReadReg1 = (opcode==`RTYPE||opcode==`IARITH||opcode==`ILOAD||opcode==`STYPE||opcode==`BTYPE||opcode==`JALR)?instruction[19:15]:5'b0;
 assign ReadReg2 = (opcode==`RTYPE||opcode==`STYPE||opcode==`BTYPE)?instruction[24:20]:5'b0;
 assign WriteReg = (opcode==`STYPE||opcode==`BTYPE) ? 5'b0 : instruction[11:7];
