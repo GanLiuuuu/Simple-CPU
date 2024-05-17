@@ -1,28 +1,20 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
+module Switch (
+    input clk,
+    input rst,
+    input SwitchCtrl,
+    input [23:0] switch_rdata,
 
-module switch(input clk,                      
-               input rst,                      // Reset
-               input IORead,                   // IO sign
-               input SwitchCtrl,               // Switch ctrl
-               input [1:0] switchaddr,         // Switch address
-               input [15:0] switch,            // Switch
-               output reg [15:0] switchrdata); // Switch read data
-    
-    always@(negedge clk or posedge rst) begin
+    output [15:0] switch_wdata  //  传入给memorio的data
+);
+    reg [15:0] sw_data;
+    assign switch_wdata = sw_data;
+    always @(negedge clk or posedge rst) begin
         if (rst) begin
-            switchrdata <= 16'h0000;
-        end
-        else if (SwitchCtrl && IORead) begin
-            if (switchaddr == 2'b00)
-                switchrdata[15:0] <= switch[15:0];
-            else if (switchaddr == 2'b10)
-                switchrdata[15:0] <= { 8'h00, switch[15:8] };
-            else
-                switchrdata <= switchrdata;
-        end
-        else begin
-            switchrdata <= switchrdata;
+            sw_data <= 0;
+        end else if (SwitchCtrl) begin
+            sw_data[15:0] <= {8'h00, switch_rdata[7:0]}; 
+        end else begin
+            sw_data <= sw_data;
         end
     end
 endmodule
