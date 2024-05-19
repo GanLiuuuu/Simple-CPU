@@ -8,7 +8,6 @@ module MemOrIO (
     input [31:0] addr_in,  // from alu_result in executs32 
 
     input [15:0] io_rdata_switch,  // data read from switch,16 bits
-    input [15:0] io_rdata_board,  // data read from board,16 bits
     input io_rdata_btn,
 
     output [31:0] addr_out,  // address to memory 
