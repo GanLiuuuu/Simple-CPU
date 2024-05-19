@@ -1,26 +1,24 @@
 module MemOrIO (
+    input clk,
+    input rst,
     input mRead,  // read memory, from control32 
     input mWrite,  // write memory, from control32 
-    input ioRead,  // read IO, from control32 
-    input ioWrite,  // write IO, from control32 
-    input [31:0] m_rdata,  // data read from memory 
-    input [31:0] r_rdata,  // data read from idecode32(register file) 
+    input [31:0] data_in,  // data read from idecode32(register file) 
     input [31:0] addr_in,  // from alu_result in executs32 
 
     input [15:0] io_rdata_switch,  // data read from switch,16 bits
-    input io_rdata_btn,
-
-    output [31:0] addr_out,  // address to memory 
-    output [31:0] r_wdata,  // data to idecode32(register file) 
-
-    output reg [31:0] write_data,  // data to memory or I/O（m_wdata, io_wdata） 
-
-    output LEDCtrlhigh,  // LED Chip Select
+    output reg [31:0] data_out,
+    output reg [15:0] LED; 
     
-    output SwitchCtrl,  //拨码开关
-    output SegCtrl  //七段数码显示管
 
 );
+    always @(posedge clk, posedge rst)begin
+        if(rst)begin
+
+        end
+        else begin
+        end
+    end
 
     assign addr_out = addr_in;
     wire ck_in;
