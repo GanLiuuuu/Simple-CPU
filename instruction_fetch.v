@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 
 module instruction_fetch(
-   input wire clk,             // Ê±ÖÓĞÅºÅ
-   input wire rst,             // ¸´Î»ĞÅºÅ
-   input wire [31:0] PC,       // ³ÌĞò¼ÆÊıÆ÷
-   output reg [31:0] instruction // Êä³öÖ¸Áî
+   input wire clk,             // æ—¶é’Ÿä¿¡å·
+   input wire rst,             // å¤ä½ä¿¡å·
+   input wire [31:0] PC,       // ç¨‹åºè®¡æ•°å™¨
+   output reg [31:0] instruction // è¾“å‡ºæŒ‡ä»¤
     );
-    wire [31:0] rom_data;  // ÓÃÓÚ´Ó ROM Ä£¿é»ñÈ¡µÄÖ¸Áî
+    wire [31:0] rom_data;  // ç”¨äºä» ROM æ¨¡å—è·å–çš„æŒ‡ä»¤
     
     instructionROM inst_rom (
         .clka(clk),
@@ -14,11 +14,11 @@ module instruction_fetch(
         .douta(rom_data)
     );
     
-    always @(posedge clk or posedge rst) begin
+    always @(negedge clk or posedge rst) begin
         if (rst) begin
-            instruction <= 32'b0;   // ¸´Î»Ê±½«Ö¸ÁîÖÃÁã
+            instruction <= 32'b0;   // å¤ä½æ—¶å°†æŒ‡ä»¤ç½®é›¶
         end else begin
-            instruction <= rom_data; // ´Ó ROM Ä£¿é»ñÈ¡Ö¸Áî
+            instruction <= rom_data; // ä» ROM æ¨¡å—è·å–æŒ‡ä»¤
         end
     end   
 
