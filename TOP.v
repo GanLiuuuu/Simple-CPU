@@ -2,7 +2,6 @@
 `include "variables.vh"
 module TOP(
     input clk,
-    input PC,
     input rst,
     output[`REGWIDTH-1:0] out
     );
