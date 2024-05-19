@@ -3,7 +3,7 @@ module Toptb();
 reg rst;
 reg clk;
 wire[31:0] out;
-Top top(clk,rst,out);
+TOP top(clk,rst,out);
 initial begin
     clk = 1'b0;
     rst = 1'b0;
