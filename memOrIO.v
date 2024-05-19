@@ -17,7 +17,6 @@ module MemOrIO (
     output reg [31:0] write_data,  // data to memory or I/O（m_wdata, io_wdata） 
 
     output LEDCtrlhigh,  // LED Chip Select
-    output LEDCtrllow,  // LED Chip Select
     
     output SwitchCtrl,  //拨码开关
     output SegCtrl  //七段数码显示管
@@ -32,7 +31,6 @@ module MemOrIO (
 
     assign r_wdata = mRead ? m_rdata : {16'h0000, io_rdata};
     assign LEDCtrlhigh = (ioWrite && low_addr == 4'h0) ? 1'b1 :1'b0;
-     assign LEDCtrllow = (ioWrite && low_addr == 4'h4) ? 1'b1 :1'b0;
     assign SegCtrl = (ioWrite && low_addr == 4'h8) ?  1'b1 : 1'b0;
 
     assign SwitchCtrl = (ioRead && low_addr == 4'h0) ?  1'b1 :1'b0;
