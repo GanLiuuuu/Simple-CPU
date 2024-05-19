@@ -5,5 +5,5 @@ module getWriteData(
     input[`REGWIDTH-1:0] ALUResult,
     output[`REGWIDTH-1:0] WriteData
 );
-assign WriteData = (mux_signal = 1) ? ReadData : ALUResult;
+assign WriteData = (mux_signal == 1) ? ReadData : ALUResult;
 endmodule
