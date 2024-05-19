@@ -4,7 +4,7 @@ module instruction_fetch(
    input wire clk,             // 时钟信号
    input wire rst,             // 复位信号
    input wire [31:0] PC,       // 程序计数器
-   output reg [31:0] instruction // 输出指令
+   output [31:0] instruction // 输出指令
     );
     
     instructionROM inst_rom (
