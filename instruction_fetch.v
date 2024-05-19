@@ -9,7 +9,7 @@ module instruction_fetch(
     
     instructionROM inst_rom (
         .clka(clk),
-        .addra(PC[13:0]),
+        .addra(PC[15:2]),
         .douta(instruction)
     );
     
