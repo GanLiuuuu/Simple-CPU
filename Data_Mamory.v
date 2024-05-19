@@ -36,7 +36,7 @@ module Data_Mamory(
         end
     end
     always @(posedge clk,posedge rst) begin
-        if(!write_mem)begin
+        if(!write_mem&& MemWrite)begin
             LED<=din[15:0];
         end
         if(rst)begin
