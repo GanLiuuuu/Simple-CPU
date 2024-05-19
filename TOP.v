@@ -30,7 +30,7 @@ wire[`REGWIDTH-1:0] PCout;
 wire[`REGWIDTH-1:0] cur_PC;
 wire[`REGWIDTH-1:0] PC;
 assign rst_filtered = rst;
-getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .dout(WriteData));
+getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 
 PC pc(.Addr_result(PCout), .clock(clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero), .branch_base_addr(cur_PC),  .PC(PC));
 instruction_fetch iFetch(.clk(clk), .rst(rst_filtered), .PC(PC), .instruction(inst));
