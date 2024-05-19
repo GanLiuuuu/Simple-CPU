@@ -2,33 +2,48 @@
 
 module Data_Mamory(
     input clk,
+    input rst,
     input MemRead,
     input MemWrite,
     input [31:0] addr,
     input [31:0] din,
-    output [31:0] dout
+    input [15:0] io_rdata_switch,
+    output reg [31:0] dout,
+    output reg [15:0] LED
     );
-    
-    // ÄÚ²¿±äÁ¿
-        reg [31:0] internal_data;
-        reg [31:0] dout_reg;
-    
-        // Á¬½ÓRAMÄ£¿é
-        RAM ram (
-            .addra(addr[13:0]),
-            .clka(clk),
-            .dina(din),
-            .douta(internal_data),
-            .wea(MemWrite)
-        );
-    
-        // ¶ÁĞ´¿ØÖÆ
-        always @(posedge clk) begin
-            if (MemRead) begin
-                dout_reg <= internal_data;
-            end
+    wire read_mem;
+    assign read_mem = (addr[31]==1) ? 1'b1 : 1'b0;
+    wire write_mem;
+    assign write_mem = (addr[31]!=1'b1 && MemWrite==1'b1) ? 1'b1:1'b0;
+    // ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
+    wire [31:0] internal_data;
+
+    // ï¿½ï¿½ï¿½ï¿½RAMÄ£ï¿½ï¿½
+    RAM ram (
+        .addra(addr[13:0]),
+        .clka(clk),
+        .dina(din),
+        .douta(internal_data),
+        .wea(write_mem)
+    );
+    //read data
+    always @(negedge clk)begin
+        if(read_mem)begin
+            dout <= {15'b0,io_rdata_switch};
         end
+        else begin
+            dout <= internal_data;
+        end
+    end
+    always @(posedge clk,posedge rst) begin
+        if(!write_mem)begin
+            LED<=din[15:0];
+        end
+        if(rst)begin
+            LED <= 16'b0;
+        end
+    end
         
-        assign dout = dout_reg;   
+ 
     
 endmodule
