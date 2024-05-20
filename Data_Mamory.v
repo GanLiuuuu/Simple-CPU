@@ -22,14 +22,16 @@ module Data_Mamory(
     wire [31:0] tmp1;
     wire [31:0] read_data;
     wire [31:0] write_data;
-    wire[2:0] a;
-    assign a = addr[2:0];
+    wire[3:0] a;
+    assign a = addr[3:0];
     wire[31:0] tmp2;
-    assign tmp2 = {16'd0,io_rdata_switch} >>> a;
+    assign tmp2 = {16'd0,io_rdata_switch[15:0]} >>> a;
     assign tmp = (read_mem)?tmp1:tmp2;
     assign read_data= (length==2'b10)? tmp : (length==2'b01&&sign==1'b1)? {{16{tmp[15]}},tmp[15:0]}:(length==2'b01&&sign==1'b0)?{16'd0,tmp[15:0]}:(length==2'b00&&sign==1'b1)?{{24{tmp[7]}},tmp[7:0]}:{24'd0,tmp[7:0]};
     assign write_data=(length==2'b10)? din : (length==2'b01)? {16'd0,din[15:0]}:{24'd0,din[7:0]};
-    
+
+    wire[15:0] tmp3;//data written back to led
+    assign tmp3 = write_data[15:0]<<<a;
     RAM ram (
         .addra(addr[13:0]),
         .clka(clk),
@@ -49,7 +51,7 @@ module Data_Mamory(
     end
     always @(posedge clk,posedge rst) begin
         if(!write_mem && MemWrite)begin
-            LED<=write_data[15:0];
+            LED[15:0]<=tmp3[15:0];
         end
         if(rst)begin
             LED <= 16'b0;
