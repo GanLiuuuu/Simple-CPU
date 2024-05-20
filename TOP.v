@@ -5,16 +5,17 @@ module TOP(
     input rst,
     input[15:0] switches,
     output[`REGWIDTH-1:0] out,
-    output  [15:0] LED,
-    output wire[`REGWIDTH-1:0] pPC,
-    output wire[`REGWIDTH-1:0] inst,
-    output wire [`REGWIDTH-1:0] imm,
-    output wire zero,
-    output wire Branch,
-    output wire en,
-    output wire[`REGWIDTH-1:0] PCout
+    output  [15:0] LED
+    
     );
-reg[2:0] state;
+     wire[`REGWIDTH-1:0] pPC;
+     wire[`REGWIDTH-1:0] inst;
+     wire [`REGWIDTH-1:0] imm;
+     wire zero;
+     wire Branch;
+     wire en;
+     wire[`REGWIDTH-1:0] PCout;
+    reg[2:0] state;
     always @(negedge clk, posedge rst)begin
         if(rst)begin
             state <= 3'b0;
