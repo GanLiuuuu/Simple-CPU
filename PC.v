@@ -21,8 +21,8 @@ module PC(
 
     always @(posedge clock or posedge reset) begin
         if(reset == 1)
-            PC <= 32'd0;
+            PC = 32'd0;
         else
-            PC <= Next_PC;
+            PC = Next_PC;
     end
 endmodule
