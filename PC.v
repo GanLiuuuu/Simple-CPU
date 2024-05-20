@@ -19,7 +19,7 @@ module PC(
     assign branch_base_addr = PC;
 
 
-    always @(posedge clock or posedge reset) begin
+    always @(posedge en or posedge reset) begin
         if(reset == 1)
             PC = 32'd0;
         else if(en)
