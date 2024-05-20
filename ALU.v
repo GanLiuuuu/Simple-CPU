@@ -73,6 +73,10 @@ assign control =
 //assign result
 assign ALUResult = 
 (control==`ADDControl) ? AddResult :
+(control==`SUBControl && funct3==3'b010 && SubResult>=0) ? 32'd0:
+(control==`SUBControl && funct3==3'b010 && SubResult<0) ? 32'd1:
+(control==`SUBControl && funct3==3'b011 && $unsigned(operand1)-$unsigned(operand2)>=0)?32'd0:
+(control==`SUBControl && funct3==3'b011 && $unsigned(operand1)-$unsigned(operand2)<0)?32'd1:
 (control==`SUBControl) ? SubResult : 
 (control==`ANDControl) ? AndRes :
 (control==`ORControl)? OrRes : 
