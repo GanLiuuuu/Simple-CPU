@@ -107,5 +107,10 @@ Data_Mamory dma(.length(length), .sign(sign),.clk(cpu_clk), .rst(rst), .io_rdata
      .upg_adr_i(upg_adr_w[13:0]),
      .upg_dat_i(upg_dat_w),
      .upg_done_i(upg_done_w));
+cpuclk divclk (
+      .clk_in1(clk),// from fpga 100Mhz
+      .clk_out1(cpu_clk),//cpu clock 23Mhz
+      .clk_out2(upg_clk) //urat clock 10Mhz
+     );
 assign out=ALUResult;
 endmodule
