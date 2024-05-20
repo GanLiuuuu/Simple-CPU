@@ -8,7 +8,6 @@ module PC(
     input        Branch,               // 閺夈儴鍤渃ontroller閿涘牆鍨介弬顓熸Ц閸氾附妲竍eq閿涳拷
     input        Zero,                  //閺夈儴鍤淎LU閿涘牆鍨介弬顓熸Ц閸氾妇娴夌粵澶涚礆
      
-    output[31:0] branch_base_addr,   // 閺堝娼禒鎯扮儲鏉烆剚瀵氭禒銈忕礉鐠囥儱锟介棿璐烶C閿涘矂锟戒礁绶欰LU
     output reg [31:0] PC
     );
     wire[31:0] PC_plus_4;
