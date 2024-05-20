@@ -15,7 +15,7 @@ module Controller(
 wire[`OPWIDTH-1:0] opcode;
 assign opcode = inst[`OPWIDTH-1:0];
 assign PCSrc = (opcode != `JALR) ? `RS: `PPC;
-assign Branch = (opcode==`BRANCH || opcode == `JAL || opcode == `JALR) ? 1'b1 : 1'b0;
+assign Branch = (opcode==`BTYPE || opcode == `JAL || opcode == `JALR) ? 1'b1 : 1'b0;
 assign ALUOp = (opcode==`RTYPE) ? `R : (opcode==`IARITH) ? `I : (opcode == `ILOAD ||opcode==`STYPE) ? `LS : (opcode==`BTYPE) ? `BRANCH : (opcode==`JAL || opcode==`JALR) ? `J : `U;
 assign MemRead = (opcode==`ILOAD) ? 1'b1 : 1'b0;
 assign MemWrite = (opcode==`STYPE) ? 1'b1:1'b0;
