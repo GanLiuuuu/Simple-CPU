@@ -13,15 +13,11 @@ module PC(
     );
     wire[31:0] PC_plus_4;
 
-    reg [31:0] Next_PC = 32'b0;
+    wire [31:0] Next_PC;
+    assgin Next_PC = ((Branch == 1) && (Zero == 1 ))?Addr_result:PC_plus_4;
     assign PC_plus_4 = PC + 4;
     assign branch_base_addr = PC;
-    always @* begin
-        if(((Branch == 1) && (Zero == 1 )))  //鐠哄疇娴?
-            Next_PC = Addr_result;
-        else 
-            Next_PC = PC_plus_4; // PC+4
-    end
+
 
     always @(posedge clock or posedge reset) begin
         if(reset == 1)
