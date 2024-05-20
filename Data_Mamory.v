@@ -49,7 +49,7 @@ module Data_Mamory(
         end
         
     end
-    always @(posedge clk,posedge rst) begin
+    always @(negedge clk,posedge rst) begin
         if(!write_mem && MemWrite)begin
             LED[15:0]<=tmp3[15:0];
         end
