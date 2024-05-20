@@ -22,10 +22,14 @@ module Data_Mamory(
     wire [31:0] tmp1;
     wire [31:0] read_data;
     wire [31:0] write_data;
-    assign tmp = (read_mem)?tmp1:{16'd0,io_rdata_switch};
+    wire[2:0] a;
+    assign a = addr[2:0];
+    wire[31:0] tmp2;
+    assign tmp2 = {16'd0,io_rdata_switch} >>> a;
+    assign tmp = (read_mem)?tmp1:tmp2;
     assign read_data= (length==2'b10)? tmp : (length==2'b01&&sign==1'b1)? {{16{tmp[15]}},tmp[15:0]}:(length==2'b01&&sign==1'b0)?{16'd0,tmp[15:0]}:(length==2'b00&&sign==1'b1)?{{24{tmp[7]}},tmp[7:0]}:{24'd0,tmp[7:0]};
     assign write_data=(length==2'b10)? din : (length==2'b01)? {16'd0,din[15:0]}:{24'd0,din[7:0]};
-
+    
     RAM ram (
         .addra(addr[13:0]),
         .clka(clk),
