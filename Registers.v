@@ -2,6 +2,7 @@
 
 
 module Registers(
+    input wire en,
     input  wire clk,
 	input  wire rst,
 	input   Write,
@@ -15,7 +16,7 @@ module Registers(
     reg[`REGWIDTH-1:0] register[`REGWIDTH-1:0];
     assign ReadData1 = register[ReadReg1];
     assign ReadData2 = register[ReadReg2];
-    always@(posedge clk,posedge rst) begin
+    always@(posedge en,posedge rst) begin
         if(rst)begin
                 //reset
                 register[0]<=32'b0;
