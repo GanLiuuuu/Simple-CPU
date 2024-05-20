@@ -40,7 +40,7 @@ wire[`REGWIDTH-1:0] PCout;
 wire[`REGWIDTH-1:0] cur_PC;
 wire[`REGWIDTH-1:0] PC;
 wire en;
-assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0
+    assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign rst_filtered = rst;
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 PC pc(.en(en),.Addr_result(PCout), .clock(clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero), .branch_base_addr(cur_PC),  .PC(PC));
