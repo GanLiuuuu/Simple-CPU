@@ -2,22 +2,22 @@
 
 module PC(
 
-    input[31:0]  Addr_result,            // 鏉ヨ嚜ALU,涓篈LU璁＄畻鍑虹殑璺宠浆鍦板潃(beq)
-    input        clock,           //鏃堕挓
-    input        reset,           //澶嶄綅淇″彿楂樼數骞虫湁鏁�
-    input        Branch,               // 鏉ヨ嚜controller锛堝垽鏂槸鍚︽槸beq锛�
-    input        Zero,                  //鏉ヨ嚜ALU锛堝垽鏂槸鍚︾浉绛夛級
+    input[31:0]  Addr_result,            // 閺夈儴鍤淎LU,娑撶瘓LU鐠侊紕鐣婚崙铏规畱鐠哄疇娴嗛崷鏉挎絻(beq)
+    input        clock,           //閺冨爼鎸�
+    input        reset,           //婢跺秳缍呮穱鈥冲娇妤傛鏁搁獮铏箒閺侊拷
+    input        Branch,               // 閺夈儴鍤渃ontroller閿涘牆鍨介弬顓熸Ц閸氾附妲竍eq閿涳拷
+    input        Zero,                  //閺夈儴鍤淎LU閿涘牆鍨介弬顓熸Ц閸氾妇娴夌粵澶涚礆
      
-    output[31:0] branch_base_addr,   // 鏈夋潯浠惰烦杞寚浠わ紝璇ュ�间负PC锛岄�佸線ALU
+    output[31:0] branch_base_addr,   // 閺堝娼禒鎯扮儲鏉烆剚瀵氭禒銈忕礉鐠囥儱锟介棿璐烶C閿涘矂锟戒礁绶欰LU
     output reg [31:0] PC
     );
     wire[31:0] PC_plus_4;
 
     reg [31:0] Next_PC = 32'b0;
     assign PC_plus_4 = PC + 4;
-    assign branch_base_addr = PC;
+    assign branch_base_addr = PC-4;
     always @* begin
-        if(((Branch == 1) && (Zero == 1 )))  //璺宠浆
+        if(((Branch == 1) && (Zero == 1 )))  //鐠哄疇娴�
             Next_PC = Addr_result;
         else 
             Next_PC = PC_plus_4; // PC+4
