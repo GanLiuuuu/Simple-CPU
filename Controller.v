@@ -10,7 +10,9 @@ module Controller(
     output MemRead,
     output MemWrite,
     output MemtoReg,
-    output RegWrite
+    output RegWrite,
+    output sign,
+    output[1:0] length
 );
 wire[`OPWIDTH-1:0] opcode;
 assign opcode = inst[`OPWIDTH-1:0];
@@ -23,4 +25,6 @@ assign RegWrite = (opcode == `STYPE || opcode == `BTYPE) ? 1'b0 : 1'b1;
 assign MemtoReg = (opcode==`ILOAD) ? 1'b1: 1'b0;
 assign ALUSrc = (opcode==`RTYPE||opcode==`BTYPE) ? `REG : (opcode==`IARITH || opcode == `ILOAD || opcode ==`STYPE||opcode==`LUI ||opcode==`AUIPC) ? `IMM:`FOUR;
 assign ALUSrc1 = (opcode==`RTYPE||opcode==`IARITH||opcode==`ILOAD||opcode==`STYPE||opcode==`BTYPE)?`REG:(opcode==`LUI) ? `ZERO : `PC;
+assign sign = (inst[14:12]==3'b001||inst[14:12]==3'b010||inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
+assign length = (inst[14:12]==3'b010)?2'b10:(inst[14:12]==3'b101||inst[14:12]==3'b001)?2'b01:2'b00;
 endmodule
