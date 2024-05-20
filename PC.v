@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module PC(
-
+    input en;
     input[31:0]  Addr_result,            // 閺夈儴鍤淎LU,娑撶瘓LU鐠侊紕鐣婚崙铏规畱鐠哄疇娴嗛崷鏉挎絻(beq)
     input        clock,           //閺冨爼鎸?
     input        reset,           //婢跺秳缍呮穱鈥冲娇妤傛鏁搁獮铏箒閺侊拷
@@ -22,7 +22,7 @@ module PC(
     always @(posedge clock or posedge reset) begin
         if(reset == 1)
             PC = 32'd0;
-        else
+        else if(en)
             PC = Next_PC;
     end
 endmodule
