@@ -15,7 +15,6 @@ module PC(
     wire [31:0] Next_PC;
     assign Next_PC = ((Branch == 1) && (Zero == 1 ))?Addr_result:PC_plus_4;
     assign PC_plus_4 = PC + 4;
-    assign branch_base_addr = PC;
 
 
     always @(posedge en or posedge reset) begin
