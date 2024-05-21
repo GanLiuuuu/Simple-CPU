@@ -12,12 +12,14 @@ module Button(
     reg [`STATE_WIDTH -1:0] state;
     wire pos_edge;  // record edge value for switching status
     wire neg_edge;
-    reg key_sig1, key_sig2, key_sig3;  // edge change is asynchronous signal
+    reg key_sig1;
+    reg key_sig2; 
+    reg key_sig3;  // edge change is asynchronous signal
     reg counter_en;
     reg [`KEY_COUNTER_WIDTH -1:0] counter;  // for clock delay
 
     // synchronize key signal with the clock
-    always @(posedge clk or pos_edge rst_n) begin
+    always @(posedge clk or posedge rst_n) begin
         if (rst_n) begin
             key_sig1 <= 1'b0;
             key_sig2 <= 1'b0;
