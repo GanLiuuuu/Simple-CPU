@@ -7,6 +7,7 @@ main:
  #led 在 0x60/64
  #确认在 0x74
  #数码管在 0x68
+ #switch 在0x70
  #按下开关：0->1->0转换，通过loop1和loop2
  loop_1: 
     lw t1, 0x74(t0)       
