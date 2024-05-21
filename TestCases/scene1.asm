@@ -9,14 +9,14 @@ li s6,0xfffff030#base address of seg
 
  #按下开关：0->1->0转换，通过loop1和loop2
  loop_1: 
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, loop_1 # 如果$s7不等于0，则跳转到loop_1
 loop_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, loop_2
     
     #到这里已经按下了确认键
-     lw t3, 0(s3)         #输入测试样例到 t3
+     lb t3, 0(s3)         #输入测试样例到 t3
      xor a0, a0, a0       # a0清零,用于计数
      
     #跳转到对应的测试样例
@@ -37,34 +37,34 @@ loop_2:
     beq t3, a0, tb7_1   
     
 tb0_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb0_1
 tb0_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb0_2
     
     #按下确认
-    lw t4, 0(s3)       # 输入加载到t4
+    lb t4, 0(s3)       # 输入加载到t4
     sw t4, 0(s4)       # 输出到led
    
 tb0_3:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb0_3
 tb0_4:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb0_4
     
     #按下确认
-    lw t4, 0(s3)       # 输入加载到t4
+    lb t4, 0(s3)       # 输入加载到t4
     sw t4, 0(s4)       # 输出到led
     
     j loop_1
 
 tb1_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb1_1
 tb1_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb1_2
     
     #按下确认
@@ -75,10 +75,10 @@ tb1_2:
     j loop_1
     
 tb2_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb2_1 
 tb2_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb2_2
     
     #按下确认
@@ -89,10 +89,10 @@ tb2_2:
     j loop_1
     
 tb3_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb3_1 
 tb3_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero,tb3_2
     
     #按下确认
@@ -104,10 +104,10 @@ tb3_2:
          j loop_1
     
 tb4_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb4_1 
 tb4_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero,tb4_2
     
     #按下确认
@@ -119,10 +119,10 @@ tb4_2:
          j loop_1    
     
 tb5_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero,  tb5_1 
 tb5_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb5_2
     
     #按下确认
@@ -134,10 +134,10 @@ tb5_2:
          j loop_1 
          
 tb6_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero,  tb6_1 
 tb6_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero, tb6_2
     
     #按下确认
@@ -149,10 +149,10 @@ tb6_2:
          j loop_1 
 
 tb7_1:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     bne t1, zero, tb7_1 
 tb7_2:
-    lw t1, 0(s5)       
+    lb t1, 0(s5)       
     beq t1, zero,  tb7_2
     
     #按下确认
