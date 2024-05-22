@@ -9,9 +9,12 @@ src_addr: .word 0x4100    # 16 Î»µÄ°ë¾«¶È¸¡µãÊı£¬¼ÙÉèÎª-2.5: 11000001 00000000 Ï
 .globl main
 main:
     # ¼ÓÔØ°ë¾«¶È¸¡µãÊıµ½ t0 ¼Ä´æÆ÷
-    la a1, src_addr
-    lw t0, 0(a1)
-    li a1,0
+    #la a1, src_addr
+    #lw t0, 0(a1)
+    #li a1,0
+    li a1, 0xfffff000
+    lw a0, 0(a1)
+    li a1, 0
     
     # ½« 16 Î»°ë¾«¶È¸¡µãÊıÍØÕ¹Îª 32 Î»µ¥¾«¶È¸¡µãÊı
     srli t1, t0, 15   # ½« t0 ÏòÓÒÒÆ¶¯ 15 Î»£¬µÚ 16 Î»ÒÆ¶¯µ½×îµÍÎ»,t1ÏÖÔÚ´æ·ûºÅÎ»
@@ -91,8 +94,13 @@ positive_noupperbound:
     
 end:
 	mv a0,t5
-	li a7, 1
-	ecall
+	li a1, 0xfffff010
+	sw a0, 0(a1)
+	
+	#li a7, 1
+	#ecall
+	li a1, 0xfffff010
+        sw a0, 0(a1)
 	
     
     

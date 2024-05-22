@@ -5,12 +5,31 @@ src_addr2: .byte 0xc2   # 假设第二个输入数 b = 0x42 11000010   c2 11000010
 .text
 .globl main
 main:
+
     # 加载第一个8位数 a 到 t0 寄存器
     la t1, src_addr1
     lb t0, 0(t1)
     # 加载第二个8位数 b 到 t2 寄存器
     la t1, src_addr2
     lb t2, 0(t1)
+    
+    
+    li t1, 0xfffff000
+    lb t0, 0(a1)
+    li t1, 0
+    
+    li t1, 0xfffff000
+    lb t2, 0(a1)
+    li t1, 0
+    
+    
+    
+    
+    
+    
+    
+    
+    
     # 对 a 和 b 进行加法运算
     add t3, t0, t2
 
@@ -32,5 +51,8 @@ end:
     mv a0, t3
     li a7, 1
     ecall
-    li a7, 10
-    ecall
+    #li a7, 10
+    #ecall
+    
+    li a1, 0xfffff010
+    sw a0, 0(a1)

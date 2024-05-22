@@ -1,9 +1,12 @@
 .data
-input_data: .byte 0x00
+# input_data: .byte 0x00
 
 
 .text
-la a1, input_data
+# la a1, input_data
+# lw a0, 0(a1)
+# li a1, 0
+li a1, 0xfffff000
 lw a0, 0(a1)
 li a1, 0
 
@@ -24,11 +27,13 @@ increment:
 
 done:
     # 输出前导零的个数
-    li a7, 1          # 使用系统调用编号 1 输出整数
-    mv a0, t1
-    ecall
+    #li a7, 1          # 使用系统调用编号 1 输出整数
+    #mv a0, t1
+    #ecall
 
     # 退出程序
-    li a7, 10         # 使用系统调用编号 10 退出程序
-    ecall
+    #li a7, 10         # 使用系统调用编号 10 退出程序
+    #ecall
+    li a1, 0xfffff010
+    sw a0, 0(a1)
 
