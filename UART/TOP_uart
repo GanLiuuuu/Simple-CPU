@@ -28,8 +28,8 @@ module TOP(
           if (rst) upg_rst <= 1;
       end
       //used for other modules which don't relate to UART
-      wire rst;
-      assign rst = rst | !upg_rst;
+      wire rst_in;
+      assign rst_in = rst | !upg_rst;
         uart_bmpg_0 uart (
           .upg_clk_i(upg_clk),
           .upg_rst_i(upg_rst),
@@ -98,9 +98,9 @@ instruction_fetch iFetch(.clk(cpu_clk), .rst(rst_filtered), .PC(pPC), .instructi
 .upg_done_i(upg_done_w)
 );
 Controller controller(.length(length), .sign(sign),.inst(inst),.Branch(Branch), .ALUOp(ALUOp), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .MemRead(MemRead), .MemWrite(MemWrite), .MemtoReg(MemtoReg), .RegWrite(RegWrite));
-Decoder decoder(.en(en_reg),.clk(cpu_clk), .rst(rst), .instruction(inst), .WriteData(WriteData), .Write(RegWrite), .imm(imm), .ReadData1(ReadData1), .ReadData2(ReadData2));
+Decoder decoder(.en(en_reg),.clk(cpu_clk), .rst(rst_in), .instruction(inst), .WriteData(WriteData), .Write(RegWrite), .imm(imm), .ReadData1(ReadData1), .ReadData2(ReadData2));
 ALU alu(.PCin(pPC), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .ALUOp(ALUOp), .funct3(inst[14:12]), .funct7(inst[31:25]), .ReadData1(ReadData1), .ReadData2(ReadData2), .imm32(imm), .zero(zero), .ALUResult(ALUResult), .PCout(PCout));
-Data_Mamory dma(.length(length), .sign(sign),.clk(cpu_clk), .rst(rst), .io_rdata_switch(switches),.LED(LED), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData)
+Data_Mamory dma(.length(length), .sign(sign),.clk(cpu_clk), .rst(rst_in), .io_rdata_switch(switches),.LED(LED), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData)
   ,  .upg_rst_i(upg_rst),
      .upg_clk_i(upg_clk_w),
      .upg_wen_i(upg_wen_w & upg_adr_w[14]),
