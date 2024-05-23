@@ -1,16 +1,6 @@
 .text
 li t6,0xfffff000#base address of swithches
 li t5,0xfffff010#base address of LED
-main:
-lb t0,12(t6)#get the number of testcase
-#todo: test case 000-100
-
-li t1,5#0101
-beq t0,t1,test101
-#todo:testcase110-111
-
-j main
-
 test101:
 #li a7,5
 #ecall
@@ -34,6 +24,6 @@ and t0,t0,t1
 or a0,t0,a0
 srli a0,a0,16
 sh a0,0(t6)
-j main
+j test101
 #li a7,1
 #ecall
