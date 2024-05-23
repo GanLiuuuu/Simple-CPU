@@ -3,7 +3,7 @@ module TOP(
     input clk,
     input rst,
     input[15:0] switches,
-    output[`REGWIDTH-1:0] out,//used for debuging
+   // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
     
     // UART
@@ -109,8 +109,8 @@ Data_Mamory dma(.length(length), .sign(sign),.clk(cpu_clk), .rst(rst_in), .io_rd
      .upg_done_i(upg_done_w));
 cpuclk divclk (
       .clk_in1(clk),// from fpga 100Mhz
-      .clk_out1(cpu_clk),//cpu clock 23Mhz
-      .clk_out2(upg_clk) //urat clock 10Mhz
+     // .clk_out1(cpu_clk),//cpu clock 23Mhz
+      .clk_out1(upg_clk) //urat clock 10Mhz
      );
 assign out=ALUResult;
 endmodule
