@@ -1,5 +1,5 @@
 .data
- .align 4
+
 .text
 main:
 li s3,0xfffff000#base address of swithches
