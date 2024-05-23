@@ -1,0 +1,105 @@
+`timescale 1ns / 1ps
+
+module Data_Memory_uart_tb;
+
+    // Inputs
+    reg [1:0] length;
+    reg sign;
+    reg clk;
+    reg rst;
+    reg MemRead;
+    reg MemWrite;
+    reg [31:0] addr;
+    reg [31:0] din;
+    reg [15:0] io_rdata_switch;
+    reg upg_rst_i;
+    reg upg_clk_i;
+    reg upg_wen_i;
+    reg [13:0] upg_adr_i;
+    reg [31:0] upg_dat_i;
+    reg upg_done_i;
+
+    // Outputs
+    wire [31:0] dout;
+    wire [15:0] LED;
+    
+    // Internal signals
+    wire kickOff;
+
+    Data_Mamory uut (
+        .length(length),
+        .sign(sign),
+        .clk(clk),
+        .rst(rst),
+        .MemRead(MemRead),
+        .MemWrite(MemWrite),
+        .addr(addr),
+        .din(din),
+        .io_rdata_switch(io_rdata_switch),
+        .dout(dout),
+        .LED(LED),
+        .upg_rst_i(upg_rst_i),
+        .upg_clk_i(upg_clk_i),
+        .upg_wen_i(upg_wen_i),
+        .upg_adr_i(upg_adr_i),
+        .upg_dat_i(upg_dat_i),
+        .upg_done_i(upg_done_i)
+    );
+
+    assign kickOff = uut.kickOff;
+
+    initial begin
+        length = 2'b00;
+        sign = 0;
+        clk = 0;
+        rst = 1;
+        MemRead = 0;
+        MemWrite = 0;
+        addr = 32'd0;
+        din = 32'd0;
+        io_rdata_switch = 16'd0;
+        upg_rst_i = 0;
+        upg_clk_i = 0;
+        upg_wen_i = 0;
+        upg_adr_i = 14'd0;
+        upg_dat_i = 32'd0;
+        upg_done_i = 0;
+
+        // Reset the UUT
+        #10 rst = 0;
+
+        // UART Programming Mode Test
+        upg_rst_i = 1; #20; upg_rst_i = 0; // Release UART reset
+        upg_done_i = 0; // Indicate programming is in progress
+
+        // Simulate a UART write operation
+        upg_clk_i = 0; upg_wen_i = 1; upg_adr_i = 14'd1; upg_dat_i = 32'hA5A5A5A5; #10;
+        upg_clk_i = 1; #10; upg_clk_i = 0; #10; // Generate clock pulse for UART
+
+        // Finish UART Programming
+        upg_done_i = 1;
+
+        // Normal Operation Mode Test
+        addr = 32'd1; MemRead = 1; #20;
+        addr = 32'd1; MemWrite = 1; din = 32'h5A5A5A5A; #20;
+        MemRead = 0; MemWrite = 0; addr = 32'd0; din = 32'd0; #20;
+
+        // Read and verify the written value
+        addr = 32'd1; MemRead = 1; #20;
+
+        // Wait for some time to observe outputs
+        #100;
+        
+        $stop;
+    end
+
+    // Clock Generation
+    always #5 clk = ~clk;
+
+    // Monitor signals
+    initial begin
+        $monitor("Time: %d, kickOff: %b, upg_rst_i: %b, upg_done_i: %b, clk: %b, addr: %h, dout: %h",
+                 $time, kickOff, upg_rst_i, upg_done_i, clk, addr, dout);
+    end
+
+endmodule
