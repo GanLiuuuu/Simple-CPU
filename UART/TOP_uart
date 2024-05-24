@@ -1,7 +1,7 @@
 `include "variables.vh"
 module TOP(
     input clk,
-    input rst,
+    input rst_a,
     input[15:0] switches,
    // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
@@ -11,6 +11,8 @@ module TOP(
      input rx,//receive data by uart
      output tx// send data by uart
     );
+   wire rst;
+   assign  rst=~rst_a;
     //uart
     wire upg_clk,upg_clk_w;
     wire upg_wen_w;  //Uart write out enable
