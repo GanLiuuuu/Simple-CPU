@@ -20,7 +20,7 @@ module Data_Mamory(
     assign read_mem = (addr[31]==1) ? 1'b0 : 1'b1;
     wire write_mem;
     assign write_mem = (addr[31]!=1'b1 && MemWrite==1'b1) ? 1'b1:1'b0;
-    // 閿熻妭璇ф嫹閿熸枻鎷烽敓鏂ゆ嫹
+    // 锟节诧拷锟斤拷锟斤拷
     wire [31:0] tmp;
     wire [31:0] tmp1;
     wire [31:0] read_data;

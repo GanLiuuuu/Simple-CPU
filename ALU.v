@@ -17,7 +17,7 @@ module ALU(
     output[`REGWIDTH-1:0] PCout
     
 );
-// 鍐呴儴淇″彿澹版槑
+// 内部信号声明
 wire[`REGWIDTH-1:0] AddResult;
 wire[`REGWIDTH-1:0] SubResult;
 wire[`REGWIDTH-1:0] AndRes;
@@ -42,7 +42,8 @@ assign operand3 = (PCSrc==`PPC) ? PCin : ReadData1;
 assign operand4 = imm32;
 assign shift_dir = (funct3==3'b101) ? `SHIRFTRIGHT : 1'b0;
 assign shift_type = (funct7==7'b0100000) ? 1'b0 : `SHIRFTLOGIC;
-    assign BranchType = (ALUOp==`BRANCH) ? (funct3==3'b100) ? `LT: (funct3==3'b101) ? `GE : (funct3==3'b001) ? `NE:`EQ : `EQ;//compute
+assign BranchType = (ALUOp==`BRANCH) ? (funct3==3'b100) ? `LT: (funct3==3'b101) ? `GE : (funct3==3'b001) ? `NE:`EQ : `EQ;
+//compute
 assign AddResult = operand1 + operand2; // add
 assign SubResult = operand1 - operand2; // sub
 assign AndRes = operand1 & operand2;//and

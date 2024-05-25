@@ -31,7 +31,7 @@
 `define CTRLWIDTH 4
 `define ALUOPWIDTH 3
 `define OPWIDTH 7
-//鍖呭惈澶ч噺鏃犳晥鍙橀噺
+//包含大量无效变量
 `define FREE_MODE         0
 `define AUTO_MODE         1
 `define LEARNING_MODE     2 

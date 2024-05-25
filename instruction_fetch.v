@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module instruction_fetch(
-   input wire clk,             // æ—¶é’Ÿä¿¡å·
-   input wire rst,             // å¤ä½ä¿¡å·
-   input wire [31:0] PC,       // ç¨‹åºè®¡æ•°å™¨
-   output [31:0] instruction // è¾“å‡ºæŒ‡ä»¤
+   input wire clk,             // Ê±ÖÓĞÅºÅ
+   input wire rst,             // ¸´Î»ĞÅºÅ
+   input wire [31:0] PC,       // ³ÌĞò¼ÆÊıÆ÷
+   output [31:0] instruction // Êä³öÖ¸Áî
     );
     
     instructionROM inst_rom (
