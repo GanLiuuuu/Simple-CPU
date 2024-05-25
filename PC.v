@@ -7,7 +7,7 @@ module PC(
     input        reset,           //婢跺秳缍呮穱鈥冲娇妤傛鏁搁獮铏箒閺侊拷
     input        Branch,               // 閺夈儴鍤渃ontroller閿涘牆鍨介弬顓熸Ц閸氾附妲竍eq閿涳拷
     input        Zero,                  //閺夈儴鍤淎LU閿涘牆鍨介弬顓熸Ц閸氾妇娴夌粵澶涚礆
-     
+     input stop,
     output reg [31:0] PC
     );
     wire[31:0] PC_plus_4;
@@ -20,6 +20,8 @@ module PC(
     always @(posedge en or posedge reset) begin
         if(reset == 1)
             PC = 32'd0;
+        else if (stop)
+            PC = PC;
         else if(en)
             PC = Next_PC;
     end
