@@ -65,10 +65,10 @@ wire ecall;
 assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign en_reg = (state==3'b110)? 1'b1:1'b0;
 assign rst_filtered = rst;
-    wire buttonOn;
-    wire button_o;
-   BUFG U1(.I(button), .O(button_o));
-    assign buttonOn = button_o;
+wire buttonOn;
+wire button_o;
+BUFG U1(.I(button), .O(button_o));
+assign buttonOn = button_o;
 // assign buttonOn = switches[0];
 //key_filter fli(
 //clk,
