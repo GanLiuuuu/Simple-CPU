@@ -9,7 +9,9 @@ module TOP(
     output wire [15:0] LED
     
     );
-     wire cpu_clk;
+    wire cpu_clk;
+    cpuclk clkc(.clk_in1(clk),.clk_out1(cpu_clk));
+     
          wire[`REGWIDTH-1:0] pPC;
          wire[`REGWIDTH-1:0] inst;
          wire stall;
@@ -76,7 +78,6 @@ module TOP(
     end
 wire rst_filtered;
 
-assign cpu_clk = state[1];
 wire[`ALUOPWIDTH-1:0] ALUOp;
 wire[`ALUSRCWIDTH-1:0] ALUSrc;//choose operand2, 0 for register data, 1 for imm data, 2 for four
 wire[`ALUSRCWIDTH-1:0] ALUSrc1;//choose operand1, 0 for registerdata, 1 for PC, 2 for zero
@@ -226,7 +227,7 @@ ALU alu(
 );
 
 Data_Mamory dma(
-    .hdw_clk(clk),
+    .hdw_clk(cpu_clk),
     .EX_WriteReg(EX_WriteReg),
     .EX_ALUResult(EX_ALUResult),
     .MemtoReg(EX_MemtoReg),
