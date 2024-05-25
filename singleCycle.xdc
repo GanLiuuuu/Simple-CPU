@@ -58,7 +58,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports rst_a]
 set_property PACKAGE_PIN P15 [get_ports rst_a]
 
 set_property IOSTANDARD LVCMOS33 [get_ports button]
-set_property PACKAGE_PIN V1 [get_ports button]
+set_property PACKAGE_PIN R11 [get_ports button]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {switches[15]}]
 set_property PACKAGE_PIN P5 [get_ports {switches[15]}]
