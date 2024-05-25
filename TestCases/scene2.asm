@@ -1,6 +1,11 @@
 .text
 li t6,0xfffff000#base address of swithches
 li t5,0xfffff010#base address of LED
+
+
+
+
+
 test101:
 #li a7,5
 #ecall
