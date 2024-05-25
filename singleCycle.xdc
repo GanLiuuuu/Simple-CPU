@@ -1,11 +1,12 @@
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
 set_property PACKAGE_PIN P17 [get_ports clk]
 
-set_property IOSTANDARD LVCMOS33 [get_ports rst]
-set_property PACKAGE_PIN P15 [get_ports rst]
+set_property IOSTANDARD LVCMOS33 [get_ports rst_a]
+set_property PACKAGE_PIN P15 [get_ports rst_a]
 
+set_property IOSTANDARD LVCMOS33 [get_ports button]
+set_property PACKAGE_PIN V1 [get_ports button]
 
-    
 set_property IOSTANDARD LVCMOS33 [get_ports {switches[15]}]
 set_property PACKAGE_PIN P5 [get_ports {switches[15]}]
 
@@ -46,7 +47,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {switches[3]}]
 set_property PACKAGE_PIN V4 [get_ports {switches[3]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {switches[2]}]
-set_property PACKAGE_PIN F3 [get_ports {switches[2]}]
+set_property PACKAGE_PIN R3 [get_ports {switches[2]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {switches[1]}]
 set_property PACKAGE_PIN T3 [get_ports {switches[1]}]
@@ -103,7 +104,3 @@ set_property PACKAGE_PIN G4 [get_ports {LED[14]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {LED[15]}]
 set_property PACKAGE_PIN F6 [get_ports {LED[15]}]
-
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T4} [get_ports tx]
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN N5} [get_ports rx]
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U4} [get_ports start_pg]
