@@ -16,7 +16,7 @@ module instruction_fetch(
     );
     
     wire kickOff = upg_rst_i | (~upg_rst_i & upg_done_i);
-    prgrom instmem (
+    prgrom instmesm (
         .clka(kickOff ? clk : upg_clk_i),
         .wea(kickOff ? 1'b0 : upg_wen_i),
         .addra(kickOff ? PC[15:2] : upg_adr_i),

@@ -4,45 +4,59 @@ module TOP(
     input clk,
     input rst_n,
     input[15:0] switches,
-    
-    output wire [15:0] LED
-    
+    input button,
+    output wire[4:0] W_rd,
+    output wire [31:0] W_Dout,
+    output wire ID_MemtoReg,
+    output wire EX_MemtoReg,
+    output wire  M_MemtoReg,
+    output wire M_RegWrite,
+    output wire EX_RegWrite,
+    output wire[31:0] ID_PC,
+    output wire[31:0] M_Dout,
+    output wire[`REGWIDTH-1:0] PCout,
+    output wire [4:0]  ID_WriteReg,
+    output wire[4:0] EX_WriteReg,
+    output wire[4:0] M_WriteReg,
+    output wire forward1,
+    output wire forward2,
+    output wire[`REGWIDTH-1:0] ReadData1,
+    output wire[`REGWIDTH-1:0] ReadData2,
+    output wire [`REGWIDTH-1:0] imm,
+    output wire flushEX,
+    output wire[`ALUOPWIDTH-1:0] ID_ALUOp,
+    output wire[`ALUSRCWIDTH-1:0] ID_ALUSrc,//choose operand2, 0 for register data, 1 for imm data, 2 for four
+    output wire[`ALUSRCWIDTH-1:0] ID_ALUSrc1,//choose operand1, 0 for registerdata, 1 for PC, 2 for zero
+
+    output wire[4:0] ReadReg1,
+    output wire[4:0] ReadReg2,
+    output wire[31:0] forwarddata1,
+    output wire[31:0] forwarddata2,
+    output wire[31:0] EX_Data1,
+    output wire[31:0] EX_Data2,
+    output wire [31:0]EX_ALUResult,
+    output wire [15:0] LED,
+    output wire cpu_clk,
+    output wire[`REGWIDTH-1:0] pPC,
+    output wire[`REGWIDTH-1:0] inst,
+    output wire stall,
+    output wire flush,
+    output wire PCsel
     );
-
-     wire cpu_clk;
-     wire[`REGWIDTH-1:0] pPC;
-     wire[`REGWIDTH-1:0] inst;
-     wire stall;
-     wire flush;
-     wire PCsel;
-     wire  M_MemtoReg;
-     wire M_RegWrite;
-     wire EX_RegWrite;
-     wire[31:0] ID_PC;
-     wire[31:0] M_Dout;
-     wire[`REGWIDTH-1:0] PCout;
-     wire [4:0]  ID_WriteReg;
-     wire[4:0] EX_WriteReg;
-     wire[4:0] M_WriteReg;
-     wire forward1;
-     wire forward2;
-     wire[`REGWIDTH-1:0] ReadData1;
-     wire[`REGWIDTH-1:0] ReadData2;
-     wire [`REGWIDTH-1:0] imm;
-     wire flushEX;
-     wire[`ALUOPWIDTH-1:0] ID_ALUOp;
-     wire[`ALUSRCWIDTH-1:0] ID_ALUSrc;//choose operand2, 0 for register data, 1 for imm data, 2 for four
-     wire[`ALUSRCWIDTH-1:0] ID_ALUSrc1;//choose operand1, 0 for registerdata, 1 for PC, 2 for zero
-
-     wire[4:0] ReadReg1;
-     wire[4:0] ReadReg2;
-     wire[31:0] forwarddata1;
-     wire[31:0] forwarddata2;
-     wire[31:0] EX_Data1;
-     wire[31:0] EX_Data2;
-     wire [31:0]EX_ALUResult;
     wire rst;
     assign rst = ~rst_n;
+    wire buttonOn;
+    wire buttonOff;
+    wire W_MemtoReg;
+    wire W_RegWrite;
+    Button b(
+        clk,
+        rst_n,
+        button,
+        buttonOn,
+        buttonOff
+    );
+    
     wire MemWrite;
     
     wire zero;
@@ -81,11 +95,11 @@ wire en_reg;
 wire[31:0] M_din;
 
 
-wire EX_MemtoReg;
+
 
 
 wire [31:0]M_ALUResult;
-wire [31:0] W_Dout;
+
 
 
 
@@ -120,12 +134,13 @@ instruction_fetch iFetch(
 wire ID_PCSrc;//choose the first operand, 0 for PC, 1 for rs1
 wire ID_MemRead;
 wire ID_MemWrite;
-wire ID_MemtoReg;
+
 wire ID_RegWrite;
 wire ID_sign;
 wire[1:0] ID_length;
 wire ID_Branch;
 wire[31:0] ID_inst;
+
 Decoder decoder(
     .M_WriteReg(M_WriteReg),
     .M_WriteData(M_WriteData),
@@ -137,6 +152,7 @@ Decoder decoder(
     .inst(inst),
     .M_RegWrite(M_RegWrite), 
     .M_Dout(M_Dout),
+    .M_MemtoReg(M_MemtoReg),
     //output
     .imm(imm), 
     .ReadData1(ReadData1), 
@@ -158,8 +174,12 @@ Decoder decoder(
     .ID_length(ID_length),
     .ID_Branch(ID_Branch),
     .ID_inst(ID_inst),
-    .WB_Dout(W_Dout)
+    .WB_Dout(W_Dout),
+    .W_RegWrite(W_RegWrite),
+    .W_MemtoReg(W_MemtoReg),
+    .W_rd(W_rd)
 );
+
 wire EX_MemWrite;
 wire EX_MemRead;
 wire[1:0] EX_length;
@@ -204,6 +224,7 @@ ALU alu(
 );
 
 Data_Mamory dma(
+    .hdw_clk(clk),
     .EX_WriteReg(EX_WriteReg),
     .EX_ALUResult(EX_ALUResult),
     .MemtoReg(EX_MemtoReg),
@@ -212,6 +233,7 @@ Data_Mamory dma(
     .in_sign(EX_sign),
     .clk(cpu_clk), 
     .rst(rst), 
+    .buttonOn(buttonOn),
     .io_rdata_switch(switches),
     .in_MemRead(EX_MemRead), 
     .in_MemWrite(EX_MemWrite),
@@ -232,16 +254,21 @@ Data_Mamory dma(
 Forward forward(
 .rs1(ReadReg1),
 .rs2(ReadReg2),
-.preprerd(M_WriteReg),
-.prerd(EX_WriteReg),
-.prepreRegWrite(M_RegWrite),
-.prepreMemtoReg(M_MemtoReg),
-.preRegWrite(EX_RegWrite),
-.preMemtoReg(EX_MemtoReg),
+.W_rd(W_rd),
+.EX_rd(EX_WriteReg),
+.preprerd(W_rd),
+.prerd(M_WriteReg),
+.W_RegWrite(W_RegWrite),
+.W_MemtoReg(W_MemtoReg),
+.M_RegWrite(M_RegWrite),
+.M_MemtoReg(M_MemtoReg),
+.EX_RegWrite(EX_RegWrite),
+.EX_MemtoReg(EX_MemtoReg),
 .prepreMemDout(M_Dout),
 .prepreALUResult(M_ALUResult),
 .preMemDout(M_Dout),
 .preALUResult(EX_ALUResult),
+.ALUResult(EX_ALUResult),
 //output
 .forward1(forward1),
 .forward2(forward2),
@@ -258,4 +285,3 @@ Forward forward(
 
 
 endmodule
-

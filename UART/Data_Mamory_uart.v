@@ -14,7 +14,7 @@ module Data_Mamory(
     output reg [15:0] LED,
     
     // UART Programmer Pinouts 
-     input upg_rst_i,  // UPG reset (Active High) 
+     input upg_rst_i,  // UPG reset (Active High)
      input upg_clk_i,  // UPG ram_clk_i (10MHz) 
      input upg_wen_i,  // UPG write enable 
      input [13:0] upg_adr_i,  // UPG write address 
