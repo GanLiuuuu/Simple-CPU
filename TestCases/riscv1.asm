@@ -7,7 +7,7 @@
 # lw a0, 0(a1)
 # li a1, 0
 li a1, 0xfffff000
-lw a0, 0(a1)
+lh a0, 0(a1)
 li a1, 0
 
  # 计算前导零的个数
@@ -35,5 +35,5 @@ done:
     #li a7, 10         # 使用系统调用编号 10 退出程序
     #ecall
     li a1, 0xfffff010
-    sw a0, 0(a1)
+    sh a0, 0(a1)
 
