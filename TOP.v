@@ -16,11 +16,10 @@ module TOP(
     assign rst=~rst_a;
     wire[15:0] input_32bit;
     assign input_32bit = LED;
-    digital_presenter dp(clk,rst,input_32bit,digital_light,seg_en);
+    digital_presenter dp(clk,rst,input_32bit,digital_light,seg_en[3:0]);
     wire[15:0] input_32bit1;
     assign input_32bit1 = {16{LED[15]}};
-    wire[7:0] seg_en1;
-    digital_presenter dp1(clk,rst,input_32bit1,digital_light1,seg_en1);
+    digital_presenter dp1(clk,rst,input_32bit1,digital_light1,seg_en[7:4]);
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
      wire [`REGWIDTH-1:0] imm;
