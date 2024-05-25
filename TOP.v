@@ -60,7 +60,7 @@ wire[1:0] length;
 wire sign;
 
 wire en_reg;
-reg stop;
+wire stop;
 wire ecall;
 assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign en_reg = (state==3'b110)? 1'b1:1'b0;
@@ -76,7 +76,7 @@ assign buttonOn = button_o;
 //button,
 //buttonOn
 //);
-stop = 1'b0;
+assign stop = 1'b0;
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 PC pc(.stop(stop),.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
 instruction_fetch iFetch(.clk(cpu_clk), .rst(rst_filtered), .PC(pPC), .instruction(inst));
