@@ -12,21 +12,19 @@ module Controller(
     output MemtoReg,
     output RegWrite,
     output sign,
-    output[1:0] length,
-    output wire stop
+    output[1:0] length
 );
 wire[`OPWIDTH-1:0] opcode;
 assign opcode = inst[`OPWIDTH-1:0];
-assign stop = (opcode == `ECALL) ? 1'b1: 1'b0;
 assign PCSrc = (opcode == `JALR) ? `RS: `PPC;
 assign Branch = (opcode==`BTYPE || opcode == `JAL || opcode == `JALR) ? 1'b1 : 1'b0;
 assign ALUOp = (opcode==`RTYPE) ? `R : (opcode==`IARITH) ? `I : (opcode == `ILOAD ||opcode==`STYPE) ? `LS : (opcode==`BTYPE) ? `BRANCH : (opcode==`JAL || opcode==`JALR) ? `J : `U;
 assign MemRead = (opcode==`ILOAD) ? 1'b1 : 1'b0;
 assign MemWrite = (opcode==`STYPE) ? 1'b1:1'b0;
-assign RegWrite = (opcode == `STYPE || opcode == `BTYPE || opcode==`ECALL) ? 1'b0 : 1'b1;
+assign RegWrite = (opcode == `STYPE || opcode == `BTYPE) ? 1'b0 : 1'b1;
 assign MemtoReg = (opcode==`ILOAD) ? 1'b1: 1'b0;
 assign ALUSrc = (opcode==`RTYPE||opcode==`BTYPE) ? `REG : (opcode==`IARITH || opcode == `ILOAD || opcode ==`STYPE||opcode==`LUI ||opcode==`AUIPC) ? `IMM:`FOUR;
 assign ALUSrc1 = (opcode==`RTYPE||opcode==`IARITH||opcode==`ILOAD||opcode==`STYPE||opcode==`BTYPE)?`REG:(opcode==`LUI) ? `ZERO : `PC;
-assign sign = (inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
+assign sign = (inst[14:12]==3'b001||inst[14:12]==3'b010||inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
 assign length = (inst[14:12]==3'b010)?2'b10:(inst[14:12]==3'b101||inst[14:12]==3'b001)?2'b01:2'b00;
 endmodule
