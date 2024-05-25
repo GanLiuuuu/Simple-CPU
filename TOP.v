@@ -7,14 +7,14 @@ module TOP(
    // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
     output[7:0] digital_light,
-    output[3:0] seg_en，
+    output[7:0] seg_en,
     input button
     );
     wire rst;
     assign rst=~rst_a;
-    wire[15:0] input_16bit;
-    assign input_16bit = LED;
-    digital_presenter dp(clk,rst,input_16bit,digital_light,seg_en);
+    wire[31:0] input_32bit;
+    assign input_32bit = {{16{LED[15]}},LED};
+    digital_presenter dp(clk,rst,input_32bit,digital_light,seg_en);
     
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
