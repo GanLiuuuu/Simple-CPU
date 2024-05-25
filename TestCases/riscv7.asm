@@ -92,6 +92,6 @@ done:
     lw t2, 0(t0)
     add a0, t1, t2
     sw a0, (t5) # 把结果存在t5led的基准地址位置
-    li a7, 1
-    ecall
+    #li a7, 1
+    #ecall
                

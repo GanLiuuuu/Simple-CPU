@@ -11,8 +11,8 @@ main:
     li t6,0xfffff000#base address of swithches
     li t5,0xfffff010#base address of LED
 
-    la a2, input_num        # 读取输入数字
-    lw a2, 0(a2)
+    #la a2, input_num        # 读取输入数字
+    lw a2, 0(t6)
     li a0, 0                # 初始化a为0
     li a1, 1                # 初始化b为1
     jal ra, fib_count       # 调用 fib_count 函数
@@ -72,6 +72,6 @@ done:
     add a0, t1, t2
     
     sw a0, 0(t5)
-    li a7, 1
-    ecall
+    #li a7, 1
+    #ecall
                
