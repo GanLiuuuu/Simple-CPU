@@ -7,7 +7,7 @@ module TOP(
    // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
     output[7:0] digital_light,
-    output[3:0] seg_en
+    output[3:0] seg_en，
     input button
     );
     wire rst;
