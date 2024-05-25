@@ -9,6 +9,7 @@ module Data_Mamory(
     input MemWrite,
     input [31:0] addr,
     input [31:0] din,
+    input buttonOn,
     input [15:0] io_rdata_switch,
     output reg [31:0] dout,
     output reg [15:0] LED
@@ -29,7 +30,7 @@ module Data_Mamory(
     wire[31:0] tmp2;
     assign tmp2 = {16'd0,io_rdata_switch[15:0]} >>> a;
     assign tmp = (read_mem)?tmp1:tmp2;
-    assign read_data= (length==2'b10)? tmp : (length==2'b01&&sign==1'b1)? {{16{tmp[15]}},tmp[15:0]}:(length==2'b01&&sign==1'b0)?{16'd0,tmp[15:0]}:(length==2'b00&&sign==1'b1)?{{24{tmp[7]}},tmp[7:0]}:{24'd0,tmp[7:0]};
+    assign read_data= (addr[31]==1&&addr[5]==1'b1)?{31'd0,buttonOn}:(length==2'b10)? tmp : (length==2'b01&&sign==1'b1)? {{16{tmp[15]}},tmp[15:0]}:(length==2'b01&&sign==1'b0)?{16'd0,tmp[15:0]}:(length==2'b00&&sign==1'b1)?{{24{tmp[7]}},tmp[7:0]}:{24'd0,tmp[7:0]};
     assign write_data=(length==2'b10)? din : (length==2'b01)? {16'd0,din[15:0]}:{24'd0,din[7:0]};
 
    //data written back to led
