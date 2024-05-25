@@ -2,12 +2,14 @@
 `include "variables.vh"
 module TOP(
     input clk,
-    input rst,
+    input rst_a,
     input[15:0] switches,
-    output[`REGWIDTH-1:0] out,//used for debuging
-    output  [15:0] LED
-    
+   // output[`REGWIDTH-1:0] out,//used for debuging
+    output  [15:0] LED,
+    input button
     );
+    wire rst;
+    assign rst=~rst_a;
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
      wire [`REGWIDTH-1:0] imm;
@@ -57,7 +59,7 @@ assign rst_filtered = rst;
     wire W_RegWrite;
     Button b(
         clk,
-        rst_n,
+        rst,
         button,
         buttonOn,
         buttonOff
