@@ -3,7 +3,7 @@
 module digital_presenter(
     input clk,
     input rst,
-    input [16:0] input_16bit,
+    input [16:0] input_32bit,
     output reg [7:0] digital_light,
     output reg [3:0] seg_en
 );
