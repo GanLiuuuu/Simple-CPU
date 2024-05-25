@@ -20,7 +20,7 @@ module digital_presenter(
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             digit_sel <= 2'b00;
-            seg_en <= 4'b1110;//默认输出是8，给第一个灯亮灯
+            seg_en <= 4'b0001;//默认输出是8，给第一个灯亮灯
         end else begin
             digit_sel <= digit_sel + 1;
             seg_en <= {seg_en[2:0], seg_en[3]};  // 循环左移，激活下一个数码管
