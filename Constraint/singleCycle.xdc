@@ -106,6 +106,3 @@ set_property PACKAGE_PIN G4 [get_ports {LED[14]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {LED[15]}]
 set_property PACKAGE_PIN F6 [get_ports {LED[15]}]
 
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T4} [get_ports tx]
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN N5} [get_ports rx]
-set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U4} [get_ports start_pg]
