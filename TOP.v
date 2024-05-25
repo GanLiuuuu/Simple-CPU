@@ -6,6 +6,7 @@ module TOP(
     input[15:0] switches,
    // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
+   input button
     );
     wire rst;
     assign rst=~rst_a;
@@ -52,8 +53,11 @@ wire en_reg;
 assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign en_reg = (state==3'b110)? 1'b1:1'b0;
 assign rst_filtered = rst;
-    wire buttonOn;
-    assign buttonOn = switches[15];
+  wire buttonOn;
+    wire button_o;
+   BUFG U1(.I(button), .O(button_o));
+    assign buttonOn = button_o;
+
     
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 PC pc(.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
