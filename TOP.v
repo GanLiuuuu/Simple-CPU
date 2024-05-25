@@ -4,11 +4,21 @@ module TOP(
     input clk,
     input rst_n,
     input[15:0] switches,
-    
+    input button,
     output wire [15:0] LED
     
     );
-
+    wire buttonOn;
+    wire buttonOff;
+    wire W_MemtoReg;
+    wire W_RegWrite;
+    Button b(
+        clk,
+        rst_n,
+        button,
+        buttonOn,
+        buttonOff
+    );
      wire cpu_clk;
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
@@ -212,6 +222,7 @@ Data_Mamory dma(
     .in_sign(EX_sign),
     .clk(cpu_clk), 
     .rst(rst), 
+    .buttonOn(buttonOn),
     .io_rdata_switch(switches),
     .in_MemRead(EX_MemRead), 
     .in_MemWrite(EX_MemWrite),
