@@ -27,6 +27,6 @@ assign RegWrite = (opcode == `STYPE || opcode == `BTYPE || opcode==`ECALL) ? 1'b
 assign MemtoReg = (opcode==`ILOAD) ? 1'b1: 1'b0;
 assign ALUSrc = (opcode==`RTYPE||opcode==`BTYPE) ? `REG : (opcode==`IARITH || opcode == `ILOAD || opcode ==`STYPE||opcode==`LUI ||opcode==`AUIPC) ? `IMM:`FOUR;
 assign ALUSrc1 = (opcode==`RTYPE||opcode==`IARITH||opcode==`ILOAD||opcode==`STYPE||opcode==`BTYPE)?`REG:(opcode==`LUI) ? `ZERO : `PC;
-assign sign = (inst[14:12]==3'b001||inst[14:12]==3'b010||inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
+assign sign = (inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
 assign length = (inst[14:12]==3'b010)?2'b10:(inst[14:12]==3'b101||inst[14:12]==3'b001)?2'b01:2'b00;
 endmodule
