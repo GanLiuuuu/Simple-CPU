@@ -23,7 +23,7 @@ module digital_presenter(
             seg_en <= 4'b1110;//默认输出是8，给第一个灯亮灯
         end else begin
             digit_sel <= digit_sel + 1;
-            seg_en <= {seg_en[3:0], seg_en[4]};  // 循环左移，激活下一个数码管
+            seg_en <= {seg_en[2:0], seg_en[3]};  // 循环左移，激活下一个数码管
         end
     end
 
