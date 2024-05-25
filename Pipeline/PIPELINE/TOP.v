@@ -44,19 +44,12 @@ module TOP(
     );
     wire rst;
     assign rst = rst_n;
-    cpuclk c(.clk_in1(clk),.clk_out1(cpu_clk));
     wire buttonOn;
     wire buttonOff;
     wire W_MemtoReg;
     wire W_RegWrite;
-    Button b(
-        clk,
-        rst_n,
-        button,
-        buttonOn,
-        buttonOff
-    );
     
+    assign buttonOn = button;
     wire MemWrite;
     
     wire zero;
@@ -73,7 +66,7 @@ module TOP(
         end
     end
 wire rst_filtered;
-
+assign cpu_clk = state[1];
 wire[`ALUOPWIDTH-1:0] ALUOp;
 wire[`ALUSRCWIDTH-1:0] ALUSrc;//choose operand2, 0 for register data, 1 for imm data, 2 for four
 wire[`ALUSRCWIDTH-1:0] ALUSrc1;//choose operand1, 0 for registerdata, 1 for PC, 2 for zero
