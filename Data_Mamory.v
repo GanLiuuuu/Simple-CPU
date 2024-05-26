@@ -36,7 +36,7 @@ module Data_Mamory(
    //data written back to led
     assign tmp3 = write_data[15:0]<<<a;
     RAM ram (
-        .addra(addr[13:0]),
+        .addra(addr[15:2]),
         .clka(clk),
         .dina(write_data),
         .douta(tmp1),
