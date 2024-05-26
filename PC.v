@@ -2,12 +2,12 @@
 
 module PC(
     input en,
-    input[31:0]  Addr_result,            // 閺夈儴鍤淎LU,娑撶瘓LU鐠侊紕鐣婚崙铏规畱鐠哄疇娴嗛崷鏉挎絻(beq)
-    input        clock,           //閺冨爼鎸?
-    input        reset,           //婢跺秳缍呮穱鈥冲娇妤傛鏁搁獮铏箒閺侊拷
-    input        Branch,               // 閺夈儴鍤渃ontroller閿涘牆鍨介弬顓熸Ц閸氾附妲竍eq閿涳拷
-    input        Zero,                  //閺夈儴鍤淎LU閿涘牆鍨介弬顓熸Ц閸氾妇娴夌粵澶涚礆
-     
+    input[31:0]  Addr_result,            // 鏉ヨ嚜ALU,涓篈LU璁＄畻鍑虹殑璺宠浆鍦板潃(beq)
+    input        clock,           //鏃堕�?
+    input        reset,           //澶嶄綅淇″彿楂樼數骞虫湁鏁�
+    input        Branch,               // 鏉ヨ嚜controller锛堝垽鏂槸鍚︽槸beq锛�
+    input        Zero,                  //鏉ヨ嚜ALU锛堝垽鏂槸鍚︾浉绛夛級
+     input ecall,
     output reg [31:0] PC
     );
     wire[31:0] PC_plus_4;
@@ -20,6 +20,8 @@ module PC(
     always @(posedge en or posedge reset) begin
         if(reset == 1)
             PC = 32'd0;
+        else if(ecall)
+            PC = PC;
         else if(en)
             PC = Next_PC;
     end
