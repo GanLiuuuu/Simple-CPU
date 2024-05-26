@@ -31,7 +31,7 @@
 `define CTRLWIDTH 4
 `define ALUOPWIDTH 3
 `define OPWIDTH 7
-//°üº¬´óÁ¿ÎŞĞ§±äÁ¿
+//é–å‘­æƒˆæ¾¶Ñ‡å™ºéƒçŠ³æ™¥é™æ©€å™º
 `define FREE_MODE         0
 `define AUTO_MODE         1
 `define LEARNING_MODE     2 
@@ -92,8 +92,9 @@
 `define ODE_TO_JOY_LENGTH     30
 `define SONG_MODE_WIDTH       2
 `define NOTE_SEQUENCE_WIDTH   301
+`define MAX_COUNT 1_0 - 1 
 
-`define MAX_COUNT 1_000_000 - 1 
+//`define MAX_COUNT 1_000_000 - 1 
 `define KEY_COUNTER_WIDTH       32
 `define STATE_WIDTH             2
 `define KEY_COUNTER_INIT_STATE  32'd0
