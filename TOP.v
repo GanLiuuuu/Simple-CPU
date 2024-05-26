@@ -6,10 +6,23 @@ module TOP(
     input[15:0] switches,
    // output[`REGWIDTH-1:0] out,//used for debuging
     output  [15:0] LED,
-   input button
+    output[7:0] seg,
+    output[7:0]seg1,
+  //  output[7:0] digital_light1,
+
+    output[7:0] an,
+    input button
     );
     wire rst;
     assign rst=~rst_a;
+    wire[15:0] input_32bit;
+    assign input_32bit = LED;
+    digital_presenter dp(clk,rst,input_32bit,seg,seg1,an); 
+    //digital_presenter dp(seg,an,clk,rst,input_32bit);   
+  //  digital_presenter dp(clk,rst,input_32bit,digital_light,seg_en[3:0]);
+   // wire[15:0] input_32bit1;
+   // assign input_32bit1 = {16{LED[15]}};
+   // digital_presenter dp1(clk,rst,input_32bit1,digital_light1,seg_en[7:4]);
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
      wire [`REGWIDTH-1:0] imm;
@@ -54,12 +67,10 @@ assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign en_reg = (state==3'b110)? 1'b1:1'b0;
 assign rst_filtered = rst;
   wire buttonOn;
-    wire button_o;
+  wire button_o;
 key key_deb(clk,rst,button,button_o);
- //  BUFG U1(.I(button), .O(button_o));
+//  BUFG U1(.I(button), .O(button_o));
 assign buttonOn = button_o;
-
-    
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 PC pc(.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
 instruction_fetch iFetch(.clk(cpu_clk), .rst(rst_filtered), .PC(pPC), .instruction(inst));
