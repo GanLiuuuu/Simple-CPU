@@ -54,22 +54,22 @@ module digital_presenter(
             end
             3'b100 :
             begin
-                disp_dat=sw[15:12];
+                disp_dat={sw[15],sw[15],sw[15],sw[15]};
                 an=8'b00010000;//显示第五个数码管，低电平有效
             end
             3'b101 :
             begin
-                disp_dat=sw[15:12];
+                disp_dat={sw[15],sw[15],sw[15],sw[15]};
                 an=8'b00100000;//显示第六个数码管，低电平有效
             end
             3'b110 :
             begin
-                disp_dat=sw[15:12];
+                disp_dat={sw[15],sw[15],sw[15],sw[15]};
                 an=8'b01000000;//显示第七个数码管，低电平有效
             end
             3'b111 :
             begin
-                disp_dat=sw[15:12];
+                disp_dat={sw[15],sw[15],sw[15],sw[15]};
                 an=8'b10000000;//显示第八个数码管，低电平有效
             end
             default:
