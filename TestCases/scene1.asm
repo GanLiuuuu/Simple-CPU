@@ -167,8 +167,8 @@ tb7_2:
     beq t1, zero,  tb7_2
     
     #按下确认
-    bltu s0,s1,open5
-    bgeu s0,s1,not_open5
+    bgeu s0,s1,open5
+    bltu s0,s1,not_open5
     open5: li s10,1 #s10设置成1
           sh s10,15(s4) #led亮
           j loop_1
