@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
 module instruction_fetch(
-   input wire clk,             // 时钟信号
-   input wire rst,             // 复位信号
-   input wire [31:0] PC,       // 程序计数器
-   output [31:0] instruction // 输出指令
+   input wire clk,             // 閺冨爼鎸撴穱鈥冲娇
+   input wire rst,             // 婢跺秳缍呮穱鈥冲娇
+   input wire [31:0] PC,       // 缁嬪绨拋鈩冩殶閸ｏ拷
+   output [31:0] instruction // 鏉堟挸鍤幐鍥︽姢
     );
     
     instructionROM inst_rom (
