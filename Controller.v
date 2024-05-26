@@ -12,7 +12,8 @@ module Controller(
     output MemtoReg,
     output RegWrite,
     output sign,
-    output[1:0] length
+    output[1:0] length,
+    output ecall
 );
 wire[`OPWIDTH-1:0] opcode;
 assign opcode = inst[`OPWIDTH-1:0];
@@ -27,4 +28,5 @@ assign ALUSrc = (opcode==`RTYPE||opcode==`BTYPE) ? `REG : (opcode==`IARITH || op
 assign ALUSrc1 = (opcode==`RTYPE||opcode==`IARITH||opcode==`ILOAD||opcode==`STYPE||opcode==`BTYPE)?`REG:(opcode==`LUI) ? `ZERO : `PC;
 assign sign = (inst[14:12]==3'b100||inst[14:12]==3'b101)?1'b0:1'b1;
 assign length = (inst[14:12]==3'b010)?2'b10:(inst[14:12]==3'b101||inst[14:12]==3'b001)?2'b01:2'b00;
+assign ecall = (opcode==`ECALL) ?1'b1:1'b0;
 endmodule
