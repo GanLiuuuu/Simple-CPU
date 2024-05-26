@@ -32,12 +32,11 @@ module Data_Mamory(
     assign tmp = (read_mem)?tmp1:tmp2;
     assign read_data= (addr[31]==1&&addr[5]==1'b1)?{31'd0,buttonOn}:(length==2'b10)? tmp : (length==2'b01&&sign==1'b1)? {{16{tmp[15]}},tmp[15:0]}:(length==2'b01&&sign==1'b0)?{16'd0,tmp[15:0]}:(length==2'b00&&sign==1'b1)?{{24{tmp[7]}},tmp[7:0]}:{24'd0,tmp[7:0]};
     assign write_data=(length==2'b10)? din : (length==2'b01)? {16'd0,din[15:0]}:{24'd0,din[7:0]};
-    wire r_clk;
-    assign r_clk = ~clk;
+
    //data written back to led
     assign tmp3 = write_data[15:0]<<<a;
     RAM ram (
-        .addra(addr[15:2]),
+        .addra(addr[13:0]),
         .clka(clk),
         .dina(write_data),
         .douta(tmp1),
