@@ -81,6 +81,6 @@ assign ALUResult =
 (control==`ANDControl) ? AndRes :
 (control==`ORControl)? OrRes : 
 (control == `XORControl)? XorRes : SHIRFTRes;
-assign zero = (ALUOp==`J||(BranchType==`EQ && ALUResult==32'b0)) ? 1'b1 : (BranchType==`NE && ALUResult!=32'b0)?1'b1 : (BranchType==`LT && ALUResult<0) ? 1'b1 : (BranchType==`GE && ALUResult >= 0) ? 1'b1 : (BranchType==`LTU && ($unsigned(operand1)-$unsigned(operand2))<0) ? 1'b1: (BranchType==`GEU && ($unsigned(operand1)-$unsigned(operand2))>=0) ? 1'b1 : 1'b0;
+    assign zero = (ALUOp==`J||(BranchType==`EQ && ALUResult==32'b0)) ? 1'b1 : (BranchType==`NE && ALUResult!=32'b0)?1'b1 : (BranchType==`LT && operand1 < operand2) ? 1'b1 : (BranchType==`GE && operand1 >= operand2) ? 1'b1 : (BranchType==`LTU && ($unsigned(operand1)<$unsigned(operand2))) ? 1'b1: (BranchType==`GEU && ($unsigned(operand1)>=$unsigned(operand2))) ? 1'b1 : 1'b0;
 assign PCout = operand3+operand4;
 endmodule
