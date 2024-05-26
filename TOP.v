@@ -74,12 +74,23 @@ assign rst_filtered = rst;
 //button,
 //buttonOn
 //);
+wire ecall_start;
+reg ecall=1'b0;
+wire[31:0] sys_inst;
+wire[31:0] fetch_inst;
+wire active;
+assign inst = (ecall)? sys_inst : fetch_inst;
+System s(en,rst,ecall,active,sys_inst);
+always@(*)begin
+    if(ecall&&!active) ecall = 1'b0;
+    else if(!ecall&&ecall_start) ecall = 1'b1;
+end
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
-PC pc(.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
-instruction_fetch iFetch(.clk(cpu_clk), .rst(rst_filtered), .PC(pPC), .instruction(inst));
-Controller controller(.length(length), .sign(sign),.inst(inst),.Branch(Branch), .ALUOp(ALUOp), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .MemRead(MemRead), .MemWrite(MemWrite), .MemtoReg(MemtoReg), .RegWrite(RegWrite));
+PC pc(.ecall(ecall),.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
+instruction_fetch iFetch(.clk(cpu_clk), .rst(rst_filtered), .PC(pPC), .instruction(fetch_inst));
+Controller controller(.ecall(ecall_start),.length(length), .sign(sign),.inst(inst),.Branch(Branch), .ALUOp(ALUOp), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .MemRead(MemRead), .MemWrite(MemWrite), .MemtoReg(MemtoReg), .RegWrite(RegWrite));
 Decoder decoder(.en(en_reg),.clk(cpu_clk), .rst(rst), .instruction(inst), .WriteData(WriteData), .Write(RegWrite), .imm(imm), .ReadData1(ReadData1), .ReadData2(ReadData2));
 ALU alu(.PCin(pPC), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .ALUOp(ALUOp), .funct3(inst[14:12]), .funct7(inst[31:25]), .ReadData1(ReadData1), .ReadData2(ReadData2), .imm32(imm), .zero(zero), .ALUResult(ALUResult), .PCout(PCout));
-    Data_Mamory dma(.buttonOn(buttonOn),.length(length), .sign(sign),.clk(cpu_clk), .rst(rst), .io_rdata_switch(switches),.LED(LED), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData));
+Data_Mamory dma(.buttonOn(buttonOn),.length(length), .sign(sign),.clk(cpu_clk), .rst(rst), .io_rdata_switch(switches),.LED(LED), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData));
 assign out=ALUResult;
 endmodule
