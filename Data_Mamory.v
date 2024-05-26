@@ -38,7 +38,7 @@ module Data_Mamory(
     assign tmp3 = write_data[15:0]<<<a;
     RAM ram (
         .addra(addr[15:2]),
-        .clka(r_clk),
+        .clka(clk),
         .dina(write_data),
         .douta(tmp1),
         .wea(write_mem)
