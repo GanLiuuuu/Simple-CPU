@@ -55,8 +55,9 @@ assign en_reg = (state==3'b110)? 1'b1:1'b0;
 assign rst_filtered = rst;
   wire buttonOn;
     wire button_o;
-   BUFG U1(.I(button), .O(button_o));
-    assign buttonOn = button_o;
+key key_deb(clk,rst,button,button_o);
+ //  BUFG U1(.I(button), .O(button_o));
+assign buttonOn = button_o;
 
     
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
