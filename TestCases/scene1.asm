@@ -71,7 +71,8 @@ tb1_2:
     
     lb t5,0(s3)
     sh t5 ,0(s4) #输出
-    mv s0,t5     #存到s0
+    mv s0,t5     
+    sw  t5,0(s7)
     j loop_1
     
 tb2_1:
@@ -83,7 +84,9 @@ tb2_2:
   
     lbu t6,0(s3) 
     sh t6 ,0(s4) #输出
-    mv s1,t6   #存到s1
+    mv s1,t6  
+    sw t6,0(s8)
+    
     
     j loop_1
     
@@ -95,6 +98,8 @@ tb3_2:
     beq t1, zero,tb3_2
     
     #按下确认
+    lw s9, 0(s7)
+    lw s10,0(s8)
     beq s0,s1,open
     bne s0,s1,not_open
     open: li s10,1 #s10设置成1
@@ -113,6 +118,8 @@ tb4_2:
     beq t1, zero,tb4_2
     
     #按下确认
+        lw s9, 0(s7)
+    lw s10,0(s8)
     blt s0,s1,open2
     bge s0,s1,not_open2
     open2: li s10,1 #s10设置成1
@@ -131,6 +138,8 @@ tb5_2:
     beq t1, zero, tb5_2
     
     #按下确认
+        lw s9, 0(s7)
+    lw s10,0(s8)
     bge s0,s1,open3
     blt s0,s1,not_open3
     open3:  li s10,1 #s10设置成1
@@ -149,6 +158,8 @@ tb6_2:
     beq t1, zero, tb6_2
     
     #按下确认
+        lw s9, 0(s7)
+    lw s10,0(s8)
     bltu s0,s1,open4
     bgeu s0,s1,not_open4
     open4:li s10,1 #s10设置成1
@@ -167,6 +178,8 @@ tb7_2:
     beq t1, zero,  tb7_2
     
     #按下确认
+            lw s9, 0(s7)
+    lw s10,0(s8)
     bgeu s0,s1,open5
     bltu s0,s1,not_open5
     open5: li s10,1 #s10设置成1
