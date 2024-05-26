@@ -3,7 +3,7 @@
 module PC(
     input en,
     input[31:0]  Addr_result,            // 鏉ヨ嚜ALU,涓篈LU璁＄畻鍑虹殑璺宠浆鍦板潃(beq)
-    input        clock,           //鏃堕�?
+    input        clock,           //鏃堕�?
     input        reset,           //澶嶄綅淇″彿楂樼數骞虫湁鏁�
     input        Branch,               // 鏉ヨ嚜controller锛堝垽鏂槸鍚︽槸beq锛�
     input        Zero,                  //鏉ヨ嚜ALU锛堝垽鏂槸鍚︾浉绛夛級
