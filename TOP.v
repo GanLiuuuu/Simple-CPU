@@ -8,8 +8,6 @@ module TOP(
     output  [15:0] LED,
     output[7:0] seg,
     output[7:0]seg1,
-  //  output[7:0] digital_light1,
-
     output[7:0] an,
     input button
     );
@@ -18,11 +16,6 @@ module TOP(
     wire[15:0] input_32bit;
     assign input_32bit = LED;
     digital_presenter dp(clk,rst,input_32bit,seg,seg1,an); 
-    //digital_presenter dp(seg,an,clk,rst,input_32bit);   
-  //  digital_presenter dp(clk,rst,input_32bit,digital_light,seg_en[3:0]);
-   // wire[15:0] input_32bit1;
-   // assign input_32bit1 = {16{LED[15]}};
-   // digital_presenter dp1(clk,rst,input_32bit1,digital_light1,seg_en[7:4]);
      wire[`REGWIDTH-1:0] pPC;
      wire[`REGWIDTH-1:0] inst;
      wire [`REGWIDTH-1:0] imm;
@@ -61,15 +54,13 @@ wire[`REGWIDTH-1:0] ALUResult;
 
 wire[1:0] length;
 wire sign;
-
 wire en_reg;
 assign en = (state[2:1]==2'b00) ? 1'b1 : 1'b0;
 assign en_reg = (state==3'b110)? 1'b1:1'b0;
 assign rst_filtered = rst;
-  wire buttonOn;
-  wire button_o;
+wire buttonOn;
+wire button_o;
 key key_deb(clk,rst,button,button_o);
-//  BUFG U1(.I(button), .O(button_o));
 assign buttonOn = button_o;
 getWriteData GetWriteData(.mux_signal(MemtoReg), .ReadData(MemData), .ALUResult(ALUResult), .WriteData(WriteData));
 PC pc(.en(en),.Addr_result(PCout), .clock(cpu_clk), .reset(rst_filtered), .Branch(Branch), .Zero(zero),  .PC(pPC));
@@ -78,5 +69,5 @@ Controller controller(.length(length), .sign(sign),.inst(inst),.Branch(Branch), 
 Decoder decoder(.en(en_reg),.clk(cpu_clk), .rst(rst), .instruction(inst), .WriteData(WriteData), .Write(RegWrite), .imm(imm), .ReadData1(ReadData1), .ReadData2(ReadData2));
 ALU alu(.PCin(pPC), .ALUSrc(ALUSrc), .ALUSrc1(ALUSrc1), .PCSrc(PCSrc), .ALUOp(ALUOp), .funct3(inst[14:12]), .funct7(inst[31:25]), .ReadData1(ReadData1), .ReadData2(ReadData2), .imm32(imm), .zero(zero), .ALUResult(ALUResult), .PCout(PCout));
     Data_Mamory dma(.buttonOn(buttonOn),.length(length), .sign(sign),.clk(cpu_clk), .rst(rst), .io_rdata_switch(switches),.LED(LED), .MemRead(MemRead), .MemWrite(MemWrite), .addr(ALUResult), .din(ReadData2), .dout(MemData));
-assign out=ALUResult;
+//assign out=ALUResult;
 endmodule
