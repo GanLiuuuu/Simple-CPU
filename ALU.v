@@ -17,7 +17,7 @@ module ALU(
     output[`REGWIDTH-1:0] PCout
     
 );
-// 内部信号声明
+// 内部信号声明。
 wire[`REGWIDTH-1:0] AddResult;
 wire[`REGWIDTH-1:0] SubResult;
 wire[`REGWIDTH-1:0] AndRes;
